@@ -1,60 +1,42 @@
-# Interactive Book Reader - Frontend
+# PaperGen
 
-## Project Overview
+PaperGen is an online platform designed to streamline the creation, management, and evaluation of academic papers. Teachers can generate papers based on given questions, schedule them for students, create classrooms, and monitor student progress. The platform also features sentiment analysis to provide feedback on student submissions.
 
-This repository contains the frontend code for the Interactive Book Reader project. Interactive Book Reader is a web and mobile application that revolutionizes the reading experience by seamlessly integrating Augmented Reality (AR) content into books. Readers can access an extensive library of books, read traditionally, or engage with AR features to bring characters and scenarios to life. The platform also includes features like text-to-speech conversion, dictionary integration, highlighting, and bookmarking to enhance the reading and learning experience.
+## Features
 
-<img src="public/Home_Page.png" alt="App Screenshot">
+- **Teacher Tools**: Create classrooms, add students, generate papers, and schedule assignments.
+- **Student Tools**: Access and complete assigned papers, view feedback.
+- **Analytics**: Monitor student progress and performance.
+- **Sentiment Analysis**: Automated feedback and rating based on paper content.
 
+## Vision
 
-## Technologies Used
+To revolutionize the educational experience by providing a seamless and intelligent platform for paper generation and evaluation.
 
-- **React**: The frontend is built using the React JavaScript library, which allows for the creation of dynamic and interactive user interfaces.
+## Mission
 
-- **React Native**: For the mobile application, React Native is used to enable cross-platform development, allowing us to target both iOS and Android devices.
-
-## Getting Started
-
-To set up and run the Interactive Book Reader frontend on your local machine, follow these steps:
-
-1. Clone this repository to your local machine using `git clone`.
-
-2. Navigate to the project directory: `cd interactive-book-reader-frontend`.
-
-3. Install project dependencies by running: `npm install`.
-
-4. Start the development server: `npm start`.
-
-5. Open your browser and access the application at [http://localhost:3000](http://localhost:3000).
-
-## Project Structure
-
-The project structure is organized for scalability and maintainability:
-
-- **src**: Contains the main source code for the React application.
-
-  - **components**: Reusable UI components.
-
-  - **containers**: Components that manage data and behavior.
-
-  - **pages**: Top-level components representing pages or views.
-
-  - **assets**: Static assets such as images, styles, and fonts.
-
-  - **api**: API configuration and utility functions.
-
-- **public**: Publicly accessible files, including the HTML template.
+To empower educators with tools for efficient classroom management and provide students with a user-friendly platform to enhance their learning experience.
 
 ## Getting Started
 
-To get started with the AReader web application, follow these steps:
+### Prerequisites
 
-1. Visit the application at [AReader Web App](https://interactive-book-reader.web.app).
+Ensure you have the following installed:
 
-2. Create an account or log in to your existing account.
+- Node.js
+- npm or yarn
+- PostgreSQL
 
-## Acknowledgments
+## Usage
 
-We would like to express our gratitude to the open-source community and the contributors who have helped make this project possible.
+1. Open your browser and navigate to `http://localhost:3000`.
+2. Log in as a teacher to create classrooms and assignments.
+3. Log in as a student to access and complete assignments.
 
+## Tech Stack
 
+- **Frontend**: React, Material-UI
+- **Backend**: Nest.js, Prisma
+- **Database**: PostgreSQL
+- **Authentication**: JWT
+- **Deployment**: Docker (optional)
