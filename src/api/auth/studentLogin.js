@@ -1,7 +1,7 @@
-import baseURL from "src/config/config";
+import baseURL from 'src/config/config';
 
-export default async function AuthLogin(loginData) {
-  const response = await fetch(`${baseURL}/api/publisher/login`, {
+export default async function StudentLogin(loginData) {
+  const response = await fetch(`${baseURL}/student/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
