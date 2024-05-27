@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["src/**/*", "src/config/config.js"],
+  "exclude": ["node_modules"]
+}
