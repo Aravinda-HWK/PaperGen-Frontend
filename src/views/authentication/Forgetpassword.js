@@ -5,7 +5,7 @@ import { Grid, Box, Card, Stack, Typography } from '@mui/material';
 // components
 import PageContainer from 'src/components/container/PageContainer';
 import AuthLogin from './auth/ForgotPassword';
-import logoImage from 'src/assets/images/logos/AReader3Dpublishers.png';
+import logoImage from 'src/assets/images/logos/Black logo - no background.png';
 import backgroundImage from 'src/assets/images/backgrounds/books-beach.jpg';
 
 const Login2 = () => {

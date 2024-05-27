@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logoImage from 'src/assets/images/logos/AReader3Dpublishers.png'; // Adjust the path to your PNG image
+import logoImage from 'src/assets/images/logos/Black logo - no background.png'; // Adjust the path to your PNG image
 import { styled } from '@mui/material';
 
 const LinkStyled = styled(Link)(() => ({

@@ -4,7 +4,7 @@ import { Grid, Box, Card } from '@mui/material';
 // components
 import PageContainer from 'src/components/container/PageContainer';
 import AuthLogin from './auth/AuthResetPassword';
-import logoImage from 'src/assets/images/logos/AReader3Dpublishers.png';
+import logoImage from 'src/assets/images/logos/Black logo - no background.png';
 import backgroundImage from 'src/assets/images/backgrounds/books-beach.jpg';
 import { useParams } from 'react-router-dom';
 
@@ -43,11 +43,7 @@ const ResetPassword = () => {
           >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
               <img src={logoImage} alt="Our Publications Logo" style={{ maxWidth: '100%' }} />
-              <AuthLogin
-                title="Reset Password"
-                id={id}
-                token={token}
-              />
+              <AuthLogin title="Reset Password" id={id} token={token} />
             </Card>
           </Grid>
         </Grid>

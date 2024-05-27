@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import Cookies from 'universal-cookie';
 import LoginFunction from '../../../api/auth/login';
-import AdminLoginFunction from '../../../api/auth/adminLogin';
+import TeacherLoginFunction from '../../../api/auth/teacherLogin';
 import swal from 'sweetalert';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -20,19 +20,19 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 const AuthLogin = ({ title, subtitle, subtext }) => {
   const cookies = new Cookies();
 
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessege, setErrorMessege] = useState('');
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
-  const [alignment, setAlignment] = useState('Publihser');
+  const [alignment, setAlignment] = useState('Teacher');
 
   const handleChange = (event, newAlignment) => {
     if (newAlignment !== null) {
@@ -44,31 +44,31 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
     event.preventDefault();
 
     const loginData = {
-      username: username,
+      email: email,
       password: password,
     };
-    if (alignment === 'Admin') {
-      console.log('Admin');
+    if (alignment === 'Teacher') {
       try {
-        const responseData = await AdminLoginFunction(loginData);
-        if (responseData.message === 'Login Successful') {
-          console.log(responseData);
-          swal({
-            title: 'Done!',
-            text: 'Login as an admin.',
-            icon: 'success',
-            timer: 1000, // Set the timer to 2000 milliseconds (2 seconds)
-            button: false,
-          });
+        const responseData = await TeacherLoginFunction(loginData);
+        console.log(responseData);
+        // if (responseData.message === 'Login Successful') {
+        //   console.log(responseData);
+        //   swal({
+        //     title: 'Done!',
+        //     text: 'Login as an admin.',
+        //     icon: 'success',
+        //     timer: 1000, // Set the timer to 2000 milliseconds (2 seconds)
+        //     button: false,
+        //   });
 
-          // Use setTimeout to wait for 2 seconds before executing the following code
-          setTimeout(() => {
-            cookies.set('admin_token', responseData.token, { path: '/' });
-            window.location.href = `/admin/home`;
-          }, 1000); // Also set the delay here to 2000 milliseconds (2 seconds)
-        } else {
-          setErrorMessege(responseData.message);
-        }
+        //   // Use setTimeout to wait for 2 seconds before executing the following code
+        //   setTimeout(() => {
+        //     cookies.set('admin_token', responseData.token, { path: '/' });
+        //     window.location.href = `/admin/home`;
+        //   }, 1000); // Also set the delay here to 2000 milliseconds (2 seconds)
+        // } else {
+        //   setErrorMessege(responseData.message);
+        // }
       } catch (error) {
         console.error('Error:', error);
       }
@@ -122,8 +122,8 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           onChange={handleChange}
           aria-label="Platform"
         >
-          <ToggleButton value="Publisher">Publisher</ToggleButton>
-          <ToggleButton value="Admin">Admin</ToggleButton>
+          <ToggleButton value="Teacher">Teacher</ToggleButton>
+          <ToggleButton value="Student">Student</ToggleButton>
         </ToggleButtonGroup>
       </div>
       <Typography
@@ -135,9 +135,10 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: '10px',
+          fontFamily: 'Roboto',
         }}
       >
-        Ready to login as {alignment} !!!
+        Ready to dive back in? Log in as {alignment}!
       </Typography>
       <Stack>
         <Box>
@@ -145,17 +146,12 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
             variant="subtitle1"
             fontWeight={600}
             component="label"
-            htmlFor="username"
+            htmlFor="email"
             mb="5px"
           >
-            Username
+            Email Address
           </Typography>
-          <CustomTextField
-            id="username"
-            onChange={handleUsernameChange}
-            variant="outlined"
-            fullWidth
-          />
+          <CustomTextField id="email" onChange={handleEmailChange} variant="outlined" fullWidth />
         </Box>
         <Box mt="25px">
           <Typography
