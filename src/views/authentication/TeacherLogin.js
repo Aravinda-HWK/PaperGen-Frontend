@@ -4,10 +4,10 @@ import { Grid, Box, Card, Stack, Typography } from '@mui/material';
 import './Login.css';
 // components
 import PageContainer from 'src/components/container/PageContainer';
-import AuthLogin from './auth/AuthLogin';
+import AuthLogin from './auth/TeacherAuthLogin';
 import logoImage from 'src/assets/images/logos/Black logo - no background.png';
 
-const Login2 = () => {
+const TeacherLogin = () => {
   return (
     <PageContainer title="Login" description="this is Login page">
       <Box
@@ -52,26 +52,7 @@ const Login2 = () => {
               }}
             >
               <img src={logoImage} alt="Our Publications Logo" style={{ maxWidth: '50%' }} />
-              <AuthLogin
-                subtitle={
-                  <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-                    <Typography color="textSecondary" variant="h6" fontWeight="500">
-                      Want to become a Teacher?
-                    </Typography>
-                    <Typography
-                      component={Link}
-                      to="/auth/register"
-                      fontWeight="500"
-                      sx={{
-                        textDecoration: 'none',
-                        color: 'primary.main',
-                      }}
-                    >
-                      Create an account
-                    </Typography>
-                  </Stack>
-                }
-              />
+              <AuthLogin />
             </Card>
           </Grid>
           <Grid
@@ -115,4 +96,4 @@ const Login2 = () => {
   );
 };
 
-export default Login2;
+export default TeacherLogin;

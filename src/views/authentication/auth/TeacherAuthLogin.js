@@ -17,7 +17,7 @@ import swal from 'sweetalert';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-const AuthLogin = ({ title, subtitle, subtext }) => {
+const TeacherAuthLogin = ({ title, subtext }) => {
   const cookies = new Cookies();
 
   const [email, setEmail] = useState('');
@@ -211,13 +211,28 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           size="large"
           fullWidth
           type="submit" // Use type="submit" to trigger form submission
-          sx={{ backgroundColor: '#003566' }}
+          sx={{ backgroundColor: '#210F56' }}
         >
           Sign In
         </Button>
         <Typography style={{ color: 'red' }}>{errorMessege}</Typography>
       </Box>
-      {subtitle}
+      <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
+        <Typography color="textSecondary" variant="h6" fontWeight="500">
+          Want to become a {alignment}?
+        </Typography>
+        <Typography
+          component={Link}
+          to="/auth/register"
+          fontWeight="500"
+          sx={{
+            textDecoration: 'none',
+            color: 'primary.main',
+          }}
+        >
+          Create an account
+        </Typography>
+      </Stack>
     </form>
   );
 };
@@ -228,4 +243,4 @@ export const getAuthToken = () => {
   return token;
 };
 
-export default AuthLogin;
+export default TeacherAuthLogin;
