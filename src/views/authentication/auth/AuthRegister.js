@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
-import LoadingNotification from 'src/components/LoadNotification/LoadingNotofication';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import { Stack } from '@mui/system';
-import regitserpublisher from '../../../api/auth/register';
+import regitserTeacher from '../../../api/auth/registerTeacher';
+import registerStudent from '../../../api/auth/registerStudent';
 import { userSchema } from '../../../validations/UserValidation';
-import swal from 'sweetalert';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
@@ -14,7 +13,6 @@ const AuthRegister = ({ title, subtext }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessege, setErrorMessege] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -33,43 +31,45 @@ const AuthRegister = ({ title, subtext }) => {
   };
 
   const handleRegisterSubmit = async (event) => {
-    // const loginData = {
-    //   name: name,
-    //   username: username,
-    //   email: email,
-    //   phonenumber: phoneNumber,
-    //   password: password,
-    // };
-    // console.log(loginData);
-    // const isValid = await userSchema.isValid(loginData);
-    // const message = await userSchema.validate(loginData).catch((err) => {
-    //   return err.message;
-    // });
-    // event.preventDefault();
-    // if (!isValid) {
-    //   setErrorMessege(message);
-    // } else {
-    //   setLoading(true);
-    //   swal({
-    //     title: 'Done!',
-    //     text: 'Wait for sending OTP.',
-    //     icon: 'info',
-    //     timer: 5000,
-    //     button: false,
-    //   });
-    //   try {
-    //     const responseData = await regitserpublisher(loginData);
-    //     if (responseData.message === 'OTP is sent successfully.') {
-    //       console.log(responseData);
-    //       window.location.href = `/auth/otpverification?id=${responseData.data.publisherId}&email=${responseData.data.email}`;
-    //     } else {
-    //       setLoading(false);
-    //       setErrorMessege(responseData.message);
-    //     }
-    //   } catch (error) {
-    //     console.log('Error', error);
-    //   }
-    // }
+    event.preventDefault();
+    setErrorMessege('');
+    const loginData = {
+      email: email,
+      password: password,
+    };
+    try {
+      await userSchema.validate(loginData, { abortEarly: false });
+
+      if (alignment === 'Teacher') {
+        try {
+          const responseData = await regitserTeacher(loginData);
+          if (responseData.error) {
+            setErrorMessege(responseData.message);
+            return;
+          }
+          window.location.href = `/auth/teacherLogin`;
+        } catch (error) {
+          setErrorMessege(error.errors[0]);
+          return;
+        }
+      } else {
+        try {
+          const responseData = await registerStudent(loginData);
+          if (responseData.error) {
+            setErrorMessege(responseData.message);
+            return;
+          }
+          window.location.href = `/auth/studentLogin`;
+        } catch (error) {
+          setErrorMessege(error.errors[0]);
+          return;
+        }
+      }
+    } catch (error) {
+      setErrorMessege(error.errors[0]);
+      event.preventDefault();
+      return;
+    }
   };
 
   return (
@@ -152,10 +152,9 @@ const AuthRegister = ({ title, subtext }) => {
         >
           Sign Up
         </Button>
-        {loading && <LoadingNotification />}
-        <Typography style={{ color: 'red' }}>{errorMessege}</Typography>
+        <Typography style={{ color: 'red', paddingTop: '10px' }}>{errorMessege}</Typography>
       </Box>
-      <Stack direction="row" justifyContent="center" spacing={1} mt={3}>
+      <Stack direction="row" justifyContent="center" spacing={1} mt={2}>
         <Typography color="textSecondary" variant="h6" fontWeight="400">
           I have an account already.
         </Typography>
