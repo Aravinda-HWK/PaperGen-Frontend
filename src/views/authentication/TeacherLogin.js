@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Grid, Box, Card, Stack, Typography } from '@mui/material';
 import './Login.css';
 // components
 import PageContainer from 'src/components/container/PageContainer';
-import AuthLogin from './auth/TeacherAuthLogin';
+import TeacherAuthLogin from './auth/TeacherAuthLogin';
 import logoImage from 'src/assets/images/logos/Black logo - no background.png';
 
 const TeacherLogin = () => {
@@ -51,8 +50,8 @@ const TeacherLogin = () => {
                 borderRadius: '20px',
               }}
             >
-              <img src={logoImage} alt="Our Publications Logo" style={{ maxWidth: '50%' }} />
-              <AuthLogin />
+              <img src={logoImage} alt="Our Company Logo" style={{ maxWidth: '50%' }} />
+              <TeacherAuthLogin />
             </Card>
           </Grid>
           <Grid
