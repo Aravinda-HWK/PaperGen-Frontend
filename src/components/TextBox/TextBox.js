@@ -3,8 +3,6 @@ import { Typography, TextField } from '@mui/material';
 import { Paper } from '@mui/material';
 
 const TextBox = ({ inputText, label, width, type, isMultiline, onInputChange, defaultValue }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   const handleInputChange = (event) => {
     const newValue = event.target.value;
     onInputChange(newValue); // Call the callback with the new value
@@ -12,16 +10,15 @@ const TextBox = ({ inputText, label, width, type, isMultiline, onInputChange, de
 
   return (
     <Paper
-      elevation={isHovered ? 10 : 3} // Change elevation on hover
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      elevation={20}
       style={{
-        padding: isHovered ? '15px' : '10px', // Adjust padding on hover
+        padding: '10px',
         width: '100%',
         maxWidth: '1000px',
         margin: '0 auto',
-        backgroundColor: '#fafaf7',
-        transition: 'all 0.6s ease-in-out', // Add a transition effect
+        background: 'linear-gradient(135deg, rgba(113, 111, 134, 0.8), rgba(33, 15, 86, 0.8))',
+        transition: 'all 0.6s ease-in-out',
+        borderRadius: '10px',
       }}
     >
       <div style={{ width: width, marginRight: '20px' }}>
@@ -36,6 +33,7 @@ const TextBox = ({ inputText, label, width, type, isMultiline, onInputChange, de
               textAlign: 'justify',
               marginLeft: '10px',
               marginTop: '10px',
+              fontWeight: 'bold',
             }}
           >
             {inputText}:{' '}
@@ -54,10 +52,9 @@ const TextBox = ({ inputText, label, width, type, isMultiline, onInputChange, de
           sx={{
             width: '100%',
             backgroundColor: '#f0f0f0',
-            // padding: '5px',
             borderRadius: '5px',
           }}
-          onChange={handleInputChange} // Add this to handle input change
+          onChange={handleInputChange}
         />
       </div>
     </Paper>
