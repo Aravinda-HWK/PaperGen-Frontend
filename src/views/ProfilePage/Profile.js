@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import TextBox from 'src/components/TextBox/TextBox';
 import PurpleButton from 'src/components/Buttons/PurpleButton';
-import YearPicker from 'src/components/DateField/YearPicker';
 import MainTopic from 'src/components/Topic/MainTopic';
 import LoadingSpinner from 'src/components/Spinner/Spinner';
 import jwt from 'jwt-decode';
@@ -11,55 +10,44 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
 import { Paper } from '@mui/material';
 import { getAuthToken } from '../authentication/auth/TeacherAuthLogin';
-import getPublisher from 'src/api/profile/get_publisher';
-import updatePublisher from 'src/api/profile/update_publisher';
+import getTeacher from 'src/api/profile/get_teacher';
+import updateTeacher from '../../api/profile/update_teacher';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import backgroundImg from 'src/assets/images/backgrounds/background.jpg';
+import backgroundImg from 'src/assets/images/backgrounds/loginBackground.jpg';
 
 const Profile = () => {
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [phonenumber, setPhonenumber] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [bio_data, setBio_data] = useState('');
-  const [year_stabilized, setYear_stabilized] = useState(0);
+  const [description, setDescription] = useState('');
   const [logo, setLogo] = useState(null);
   const [imageLink, setImageLink] = useState('');
   const [resposeMessage, setResponseMessage] = useState('');
   const [loading, setLoading] = useState('');
   const updateData = {};
   const fileInputRef = useRef(null);
-  const [id, setId] = useState(''); // Publisher ID
+  const [id, setId] = useState('');
 
-  const handleNameChange = (newInputText) => {
-    setName(newInputText);
+  const handleFirstNameChange = (newInputText) => {
+    setFirstName(newInputText);
+  };
+
+  const handleLastNameChange = (newInputText) => {
+    setLastName(newInputText);
   };
 
   const handleEmailChange = (newInputText) => {
     setEmail(newInputText);
   };
 
-  const handlePhonenumberChange = (newInputText) => {
-    setPhonenumber(newInputText);
-  };
-
-  const handleUsernameChange = (newInputText) => {
-    setUsername(newInputText);
-  };
-
-  const handleBio_dataChange = (newInputText) => {
-    setBio_data(newInputText);
-  };
-
-  const handleYear_stabilizedChange = (newInputText) => {
-    setYear_stabilized(newInputText);
-  };
-
   const handlePasswordChange = (newInputText) => {
     setPassword(newInputText);
+  };
+
+  const handleDescriptionChange = (newInputText) => {
+    setDescription(newInputText);
   };
 
   const handleLogoChange = (event) => {
@@ -71,17 +59,18 @@ const Profile = () => {
     fileInputRef.current.click();
   };
 
-  const [publisher, setPublisher] = useState({});
+  const [teacher, setTeacher] = useState({});
 
   const fetchData = async () => {
     try {
       const token = getAuthToken();
-      const id = jwt(token)._id;
+      const id = jwt(token).id;
       setId(id);
-      const data = await getPublisher(id);
-      setPublisher(data.publisher);
+      const data = await getTeacher(id, token);
+      setTeacher(data);
+      console.log(data);
     } catch (err) {
-      window.location.href = '/auth/login';
+      window.location.href = '/auth/teacherLogin';
     }
   };
 
@@ -89,20 +78,27 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  const handleUpdateSubmit = async (event) => {
-    console.log('handleUpdateSubmit');
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
 
-    if (name !== '') {
-      updateData.name = name;
+  const handleUpdateSubmit = async (event) => {
+    event.preventDefault();
+    setResponseMessage('');
+    if (firstName !== '') {
+      updateData.firstName = firstName;
+    }
+    if (lastName !== '') {
+      updateData.lastName = lastName;
     }
     if (email !== '') {
-      updateData.email = email;
-    }
-    if (phonenumber !== '') {
-      updateData.phonenumber = phonenumber;
-    }
-    if (username !== '') {
-      updateData.username = username;
+      if (isValidEmail(email)) {
+        updateData.email = email;
+      } else {
+        setResponseMessage('Invalid email address.');
+        return;
+      }
     }
     if (password !== '') {
       if (password.length < 8) {
@@ -112,27 +108,31 @@ const Profile = () => {
         updateData.password = password;
       }
     }
-    if (bio_data !== '') {
-      updateData.bio_data = bio_data;
-    }
-    if (year_stabilized !== 0) {
-      updateData.year_stabilized = year_stabilized;
+    if (description !== '') {
+      updateData.description = description;
     }
     if (imageLink !== '') {
-      updateData.logo = imageLink;
+      updateData.photo = imageLink;
     }
-    updateData._id = id;
-    console.log(updateData);
+    updateData.id = id;
 
-    const responseData = await updatePublisher(updateData);
-    setResponseMessage(responseData.message);
-    if (responseData.message === 'Publisher data is updated successfully.') {
-      fetchData();
-      toast.success('Publisher data is updated!', {
-        position: toast.POSITION.TOP_RIGHT,
+    console.log(updateData);
+    const responseData = await updateTeacher(updateData);
+    if (responseData.error) {
+      setResponseMessage(responseData.message);
+    } else {
+      setTeacher(responseData);
+      setResponseMessage('Profile is updated successfully.');
+      toast.success('Profile is updated successfully.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
-    console.log(responseData.message);
   };
 
   const handleUpload = () => {
@@ -140,7 +140,7 @@ const Profile = () => {
       return; // No file selected
     }
     setLoading('Uploading');
-    const storageRef = ref(storage, `logo/${v4()}`);
+    const storageRef = ref(storage, `profile/${v4()}`);
     uploadBytes(storageRef, logo)
       .then((snapshot) => {
         setLoading('Uploaded a logo!');
@@ -205,7 +205,7 @@ const Profile = () => {
             }}
           >
             <img
-              src={publisher.logo}
+              src={teacher.photo ? teacher.photo : 'https://via.placeholder.com/200'}
               alt="logo"
               style={{
                 width: '200px',
@@ -257,15 +257,29 @@ const Profile = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div style={{ width: '48%' }}>
               <TextBox
-                inputText="Name"
-                label="Enter new name:"
+                inputText="First Name"
+                label="Enter new first name:"
                 width="100%"
                 type="text"
                 isMultiline={false}
-                defaultValue={publisher.name}
-                onInputChange={handleNameChange}
+                defaultValue={teacher.firstName ? teacher.firstName : 'No first name available'}
+                onInputChange={handleFirstNameChange}
               />
             </div>
+            <div style={{ width: '48%' }}>
+              <TextBox
+                inputText="Last Name"
+                label="Enter new last name:"
+                width="100%"
+                type="text"
+                isMultiline={false}
+                defaultValue={teacher.lastName ? teacher.lastName : 'No last name available'}
+                onInputChange={handleLastNameChange}
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div style={{ width: '48%' }}>
               <TextBox
                 inputText="Email Address"
@@ -273,38 +287,10 @@ const Profile = () => {
                 width="100%"
                 type="text"
                 isMultiline={false}
-                defaultValue={publisher.email}
+                defaultValue={teacher.email ? teacher.email : 'No email available'}
                 onInputChange={handleEmailChange}
               />
             </div>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-            <div style={{ width: '48%' }}>
-              <TextBox
-                inputText="Phone"
-                label="Enter new phone number:"
-                width="100%"
-                type="text"
-                isMultiline={false}
-                defaultValue={publisher.phonenumber}
-                onInputChange={handlePhonenumberChange}
-              />
-            </div>
-            <div style={{ width: '48%' }}>
-              <TextBox
-                inputText="Username"
-                label="Enter new username:"
-                width="100%"
-                type="text"
-                isMultiline={false}
-                defaultValue={publisher.username}
-                onInputChange={handleUsernameChange}
-              />
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div style={{ width: '48%' }}>
               <TextBox
                 inputText="Password"
@@ -312,28 +298,20 @@ const Profile = () => {
                 width="100%"
                 type="password"
                 isMultiline={false}
-                defaultValue="Not Visible only editable"
+                defaultValue={'Password is not visible'}
                 onInputChange={handlePasswordChange}
-              />
-            </div>
-            <div style={{ width: '48%' }}>
-              <YearPicker
-                text="Date of Birth"
-                onInputChange={handleYear_stabilizedChange}
-                output={publisher.year_stabilized}
-                label="Enter New Year:"
               />
             </div>
           </div>
 
           <TextBox
-            inputText="Bio Data"
-            label="Enter bio data:"
+            inputText="Description"
+            label="Enter new descriptio:"
             width="100%"
             type="text"
             isMultiline={true}
-            defaultValue={publisher.bio_data}
-            onInputChange={handleBio_dataChange}
+            defaultValue={teacher.description ? teacher.description : 'No description available'}
+            onInputChange={handleDescriptionChange}
           />
 
           <div
