@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Card, Stack, Typography } from '@mui/material';
+import { Grid, Box, Card } from '@mui/material';
 import './Login.css';
 // components
 import PageContainer from 'src/components/container/PageContainer';

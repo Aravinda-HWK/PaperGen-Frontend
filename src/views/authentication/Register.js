@@ -1,6 +1,5 @@
 import React from 'react';
-import { Grid, Box, Card, Typography, Stack } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Grid, Box, Card } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import AuthRegister from './auth/AuthRegister';
 import backgroundImage from 'src/assets/images/backgrounds/glass-light-abstract-background-blue-background-3d-5120x2880-8738.jpg';
