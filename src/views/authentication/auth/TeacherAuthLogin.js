@@ -17,7 +17,6 @@ import swal from 'sweetalert';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { userSchema } from '../../../validations/UserValidation';
-import jwtDecode from 'jwt-decode';
 
 const TeacherAuthLogin = ({ title, subtext }) => {
   const cookies = new Cookies();
@@ -69,8 +68,8 @@ const TeacherAuthLogin = ({ title, subtext }) => {
 
           // Use setTimeout to wait for 2 seconds before executing the following code
           setTimeout(() => {
-            cookies.set('teacher_token', responseData.access_token, { path: '/' });
-            window.location.href = `/admin/home`;
+            cookies.set('token', responseData.access_token, { path: '/' });
+            window.location.href = `/home`;
           }, 1000); // Also set the delay here to 2000 milliseconds (2 seconds)
         } else {
           setErrorMessege(responseData.message);
@@ -99,8 +98,8 @@ const TeacherAuthLogin = ({ title, subtext }) => {
 
           // Use setTimeout to wait for 2 seconds before executing the following code
           setTimeout(() => {
-            cookies.set('student_token', responseData.access_token, { path: '/' });
-            window.location.href = `/home`;
+            cookies.set('token', responseData.access_token, { path: '/' });
+            window.location.href = `/admin/home`;
           }, 1000); // Also set the delay here to 2000 milliseconds (2 seconds)
         } else {
           setErrorMessege(responseData.message);

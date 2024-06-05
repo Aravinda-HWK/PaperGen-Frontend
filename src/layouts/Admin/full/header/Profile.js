@@ -15,7 +15,7 @@ import { IconListCheck, IconMail, IconUser } from '@tabler/icons';
 
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import Cookies from 'universal-cookie';
-import {getAdmin} from 'src/api/profile/get_admin';
+import { getAdmin } from 'src/api/profile/get_admin';
 
 export const clearAuthToken = () => {
   // Clear the 'token' cookie by setting its value to an empty string and specifying a past expiration date
@@ -26,22 +26,22 @@ export const clearAuthToken = () => {
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const [admin, setAdmin] = useState({});
-  const fetchData = async () => {
-    try {
-      const cookies = new Cookies();
-      const token = cookies.get('admin_token');
-      const id = jwt(token)._id;
-      console.log(id);
-      const response = await getAdmin(id);
-      setAdmin(response);
-      console.log(response);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const cookies = new Cookies();
+  //     const token = cookies.get('admin_token');
+  //     const id = jwt(token)._id;
+  //     console.log(id);
+  //     const response = await getAdmin(id);
+  //     setAdmin(response);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   const handleClick2 = (event) => {
