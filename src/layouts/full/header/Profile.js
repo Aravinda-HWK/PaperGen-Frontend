@@ -11,7 +11,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import jwt from 'jwt-decode';
-import { IconListCheck, IconMail, IconUser } from '@tabler/icons';
+import { IconUser } from '@tabler/icons';
 
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import Cookies from 'universal-cookie';
@@ -111,18 +111,7 @@ const Profile = () => {
           </ListItemIcon>
           <ListItemText link="profile">My Profile</ListItemText>
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <IconMail width={20} />
-          </ListItemIcon>
-          <ListItemText>My Account</ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <IconListCheck width={20} />
-          </ListItemIcon>
-          <ListItemText>My Tasks</ListItemText>
-        </MenuItem>
+
         <Box mt={1} py={1} px={2}>
           <Button
             variant="outlined"

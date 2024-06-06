@@ -1,5 +1,13 @@
 import {
-   IconLogin, IconBook2, IconUserPlus, IconHome,IconBrandProducthunt,IconAccessible,IconCards,IconAugmentedReality
+  IconLogin,
+  IconBook2,
+  IconUserPlus,
+  IconHome,
+  IconBrandProducthunt,
+  IconAccessible,
+  IconCards,
+  IconAugmentedReality,
+  IconSchool,
 } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
@@ -7,13 +15,19 @@ import { uniqueId } from 'lodash';
 const Menuitems = [
   {
     navlabel: true,
-    subheader: 'Home'  
+    subheader: 'Home',
   },
   {
-    id:uniqueId(),
+    id: uniqueId(),
     title: 'Home',
     icon: IconHome,
     href: '/home',
+  },
+  {
+    id: uniqueId(),
+    title: 'Classroom',
+    icon: IconSchool,
+    href: '/classroom',
   },
   {
     id: uniqueId(),
@@ -41,12 +55,12 @@ const Menuitems = [
     href: '/registerbook',
   },
   {
-    id : uniqueId(),
+    id: uniqueId(),
     title: 'About us',
     icon: IconAccessible,
     href: '/aboutus',
   },
-  
+
   {
     navlabel: true,
     subheader: 'Auth',
@@ -55,7 +69,7 @@ const Menuitems = [
     id: uniqueId(),
     title: 'Login',
     icon: IconLogin,
-    href: '/auth/login',
+    href: '/auth/teacherLogin',
   },
   {
     id: uniqueId(),
@@ -63,7 +77,6 @@ const Menuitems = [
     icon: IconUserPlus,
     href: '/auth/register',
   },
-  
 ];
 
 export default Menuitems;
