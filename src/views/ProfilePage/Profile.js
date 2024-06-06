@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Button } from '@mui/material';
 import TextBox from 'src/components/TextBox/TextBox';
 import PurpleButton from 'src/components/Buttons/PurpleButton';
 import MainTopic from 'src/components/Topic/MainTopic';
@@ -15,6 +16,7 @@ import updateTeacher from '../../api/profile/update_teacher';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImg from 'src/assets/images/backgrounds/loginBackground.jpg';
+const moment = require('moment');
 
 const Profile = () => {
   const [firstName, setFirstName] = useState('');
@@ -29,6 +31,10 @@ const Profile = () => {
   const updateData = {};
   const fileInputRef = useRef(null);
   const [id, setId] = useState('');
+
+  const formatDate = (date) => {
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+  };
 
   const handleFirstNameChange = (newInputText) => {
     setFirstName(newInputText);
@@ -167,17 +173,18 @@ const Profile = () => {
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: '100vh',
-          backgroundImage: `url(${backgroundImg})`, // Set the background image
-          backgroundSize: 'cover', // Adjust the background size
-          backgroundPosition: 'center', // Center the background image
+          backgroundImage: `url(${backgroundImg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          elevation: 20,
         }}
       >
         <Paper
-          elevation={10}
+          elevation={20}
           style={{
             alignItems: 'center',
             padding: '10px',
-            width: '19%',
+            width: '20%',
             height: '50%',
             maxWidth: '1000px',
             margin: '0 auto',
@@ -187,13 +194,14 @@ const Profile = () => {
           <MainTopic text="Your Profile" />
         </Paper>
         <Paper
-          elevation={10}
+          elevation={20}
           style={{
             padding: '20px',
             width: '100%',
             maxWidth: '1000px',
             margin: '0 auto',
-            backgroundColor: '#fafaf7',
+            // backgroundColor: '#fafaf7',
+            backgroundImage: `url(https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)`,
           }}
         >
           <div
@@ -211,15 +219,15 @@ const Profile = () => {
                 width: '200px',
                 height: '200px',
                 cursor: 'pointer',
-                borderRadius: '50%',
+                borderRadius: '20%',
                 objectFit: 'cover',
                 objectPosition: 'center',
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Add transitions
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.8)', // Add box-shadow
               }}
               hover={{
-                transform: 'scale(1.1)', // Increase size by 10% on hover
-                boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.9)', // Add a larger shadow on hover
+                transform: 'scale(1.5)',
+                boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.9)',
               }}
               onClick={handleImageClick}
             />
@@ -236,7 +244,7 @@ const Profile = () => {
               ref={fileInputRef}
               style={{ display: 'none' }}
             />
-            <button
+            <Button
               onClick={handleUpload}
               style={{
                 marginLeft: '10px',
@@ -248,10 +256,46 @@ const Profile = () => {
                 cursor: 'pointer',
                 borderRadius: '5px',
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
               }}
             >
               Upload
-            </button>
+            </Button>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+            <div
+              style={{
+                width: '48%',
+                borderRadius: '5px',
+                backgroundColor: '#f0f0f0',
+                height: '40px',
+                paddingLeft: '10px',
+                paddingTop: '5px',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+                elevation: '20',
+              }}
+            >
+              <Typography variant="h6" style={{ color: 'black', textAlign: 'left' }}>
+                <b>Created At:</b> {formatDate(teacher.createdAt)}
+              </Typography>
+            </div>
+            <div
+              style={{
+                width: '48%',
+                borderRadius: '5px',
+                backgroundColor: '#f0f0f0',
+                height: '40px',
+                paddingLeft: '10px',
+                paddingTop: '5px',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+                elevation: '20',
+              }}
+            >
+              <Typography variant="h6" style={{ color: 'black', textAlign: 'left' }}>
+                <b>Updated At:</b> {formatDate(teacher.updatedAt)}
+              </Typography>
+            </div>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>

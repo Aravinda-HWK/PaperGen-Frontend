@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, TextField } from '@mui/material';
 import { Paper } from '@mui/material';
 
@@ -19,6 +19,8 @@ const TextBox = ({ inputText, label, width, type, isMultiline, onInputChange, de
         background: 'linear-gradient(135deg, rgba(113, 111, 134, 0.8), rgba(33, 15, 86, 0.8))',
         transition: 'all 0.6s ease-in-out',
         borderRadius: '10px',
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+        elevation: '20',
       }}
     >
       <div style={{ width: width, marginRight: '20px' }}>
@@ -37,7 +39,7 @@ const TextBox = ({ inputText, label, width, type, isMultiline, onInputChange, de
             }}
           >
             {inputText}:{' '}
-            <span style={{ color: 'blue', fontStyle: defaultValue ? 'italic' : 'normal' }}>
+            <span style={{ color: 'white', fontStyle: defaultValue ? 'italic' : 'normal' }}>
               {defaultValue}
             </span>
           </Typography>
