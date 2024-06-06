@@ -2,12 +2,12 @@ import PageContainer from 'src/components/container/PageContainer';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect, useState, useMemo } from 'react';
-import getAll from 'src/api/customers/getAll';
+import getAll from 'src/api/classroom/getAll';
 import moment from 'moment';
 import Avatar from '@mui/material/Avatar';
 import UserAction from './UserAction';
 import PurpleButton from 'src/components/Buttons/PurpleButton';
-import deleteUser from 'src/api/customers/deleteUser';
+import deleteUser from 'src/api/classroom/deleteUser';
 import { getAdminToken } from 'src/config/token/getAdminToken';
 
 const Customer = () => {
@@ -23,14 +23,23 @@ const Customer = () => {
         field: 'image_link',
         headerName: 'Avator',
         width: 70,
-        renderCell: (params) => <Avatar src={params.row.image_link} sx={{ width: 40, height: 40 }} />,
+        renderCell: (params) => (
+          <Avatar src={params.row.image_link} sx={{ width: 40, height: 40 }} />
+        ),
         sortable: false,
         filterable: false,
       },
-      { field: 'name', headerName: 'Name', width: 150,editable: true },
+      { field: 'name', headerName: 'Name', width: 150, editable: true },
       { field: 'email', headerName: 'Email', width: 200, editable: true },
       { field: 'username', headerName: 'Username', width: 120, editable: true },
-      { field: 'createdAt', headerName: 'Created At', width: 100, renderCell: (params) => {return moment(params.value).format('DD/MM/YYYY')} },
+      {
+        field: 'createdAt',
+        headerName: 'Created At',
+        width: 100,
+        renderCell: (params) => {
+          return moment(params.value).format('DD/MM/YYYY');
+        },
+      },
       { field: 'bio_data', headerName: 'Bio Data', width: 220, editable: true },
       { field: 'phonenumber', headerName: 'Phone Number', width: 130, editable: true },
       {
@@ -54,14 +63,14 @@ const Customer = () => {
       setRows([]);
       for (const element of data.users) {
         let item = {
-            image_link: element.image_link,
-            name: element.name,
-            email: element.email,
-            username: element.username,
-            createdAt: element.createdAt,
-            bio_data: element.bio_data,
-            phonenumber: element.phonenumber,
-            id: element._id,
+          image_link: element.image_link,
+          name: element.name,
+          email: element.email,
+          username: element.username,
+          createdAt: element.createdAt,
+          bio_data: element.bio_data,
+          phonenumber: element.phonenumber,
+          id: element._id,
         };
         setRows((rows) => [...rows, item]);
         // console.log(data.data[i]);
@@ -105,11 +114,11 @@ const Customer = () => {
           pageSize={pageSize}
           pagination
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          checkboxSelection    
+          checkboxSelection
           selectionModel={selectionModel}
           onRowSelectionModelChange={(newSelectionModel) => {
             setSelectionModel(newSelectionModel);
-          }}   
+          }}
           getRowSpacing={(params) => ({
             top: params.isFirstVisible ? 0 : 8,
             bottom: params.isLastVisible ? 0 : 8,
@@ -139,9 +148,11 @@ const Customer = () => {
           }}
         />
       </Box>
-      <div style={{
-        padding: '30px',
-      }}></div>
+      <div
+        style={{
+          padding: '30px',
+        }}
+      ></div>
       <PurpleButton label={'Delete Reader'} onClick={handleDelete} />
       <Box>
         <Typography style={{ color: 'green', textDecoration: 'none' }}>{message}</Typography>

@@ -22,7 +22,7 @@ const BoookDetailsPage = Loadable(
 const Profile = Loadable(lazy(() => import('../views/ProfilePage/Profile')));
 const HomePage = Loadable(lazy(() => import('../views/Home/HomePage')));
 const AboutUs = Loadable(lazy(() => import('../views/AboutUs/AboutUs')));
-const Customers = Loadable(lazy(() => import('../views/customers/Customer')));
+const Classroom = Loadable(lazy(() => import('../views/classroom/Classroom')));
 const ARContent = Loadable(lazy(() => import('../views/AR Content/ARContent')));
 const OTPVerification = Loadable(lazy(() => import('../views/OTPVerfication/OTPVerification')));
 const AdminProfile = Loadable(lazy(() => import('../views/admin/ProfilePage/AdminProfile')));
@@ -39,7 +39,7 @@ const Router = [
       { path: '/', element: <Navigate to="/auth/teacherLogin" /> },
       { path: '/home', exact: true, element: <HomePage /> },
       { path: '/products', exact: true, element: <Products /> },
-      { path: '/customers', exact: true, element: <Customers /> },
+      { path: '/classroom', exact: true, element: <Classroom /> },
       { path: '/arcontent', exact: true, element: <ARContent /> },
       { path: '/registerbook', exact: true, element: <RegisterPage /> },
       { path: '/aboutus', exact: true, element: <AboutUs /> },

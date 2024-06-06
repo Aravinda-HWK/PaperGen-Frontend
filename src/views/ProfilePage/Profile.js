@@ -16,6 +16,7 @@ import updateTeacher from '../../api/profile/update_teacher';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImg from 'src/assets/images/backgrounds/loginBackground.jpg';
+import PageContainer from 'src/components/container/PageContainer';
 const moment = require('moment');
 
 const Profile = () => {
@@ -167,209 +168,212 @@ const Profile = () => {
 
   return (
     <>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh',
-          backgroundImage: `url(${backgroundImg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          elevation: 20,
-        }}
-      >
-        <Paper
-          elevation={20}
+      <PageContainer title="Profile Page" alt="profile" description="this is Prodile Page">
+        <div
           style={{
+            display: 'flex',
+            justifyContent: 'center',
             alignItems: 'center',
-            padding: '10px',
-            width: '20%',
-            height: '50%',
-            maxWidth: '1000px',
-            margin: '0 auto',
-            backgroundColor: '#fafaf7',
+            minHeight: '100vh',
+            backgroundImage: `url(${backgroundImg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            elevation: 20,
           }}
         >
-          <MainTopic text="Your Profile" />
-        </Paper>
-        <Paper
-          elevation={20}
-          style={{
-            padding: '20px',
-            width: '100%',
-            maxWidth: '1000px',
-            margin: '0 auto',
-            // backgroundColor: '#fafaf7',
-            backgroundImage: `url(https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)`,
-          }}
-        >
-          <div
+          <Paper
+            elevation={20}
             style={{
-              display: 'flex',
-              justifyContent: 'center',
               alignItems: 'center',
-              height: '30vh',
+              padding: '10px',
+              width: '20%',
+              height: '50%',
+              maxWidth: '1000px',
+              margin: '0 auto',
+              backgroundColor: '#fafaf7',
             }}
           >
-            <img
-              src={teacher.photo ? teacher.photo : 'https://via.placeholder.com/200'}
-              alt="logo"
-              style={{
-                width: '200px',
-                height: '200px',
-                cursor: 'pointer',
-                borderRadius: '20%',
-                objectFit: 'cover',
-                objectPosition: 'center',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Add transitions
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.8)', // Add box-shadow
-              }}
-              hover={{
-                transform: 'scale(1.5)',
-                boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.9)',
-              }}
-              onClick={handleImageClick}
-            />
-          </div>
-          {loading === 'Uploading' ? <LoadingSpinner /> : null}
-          {loading === 'Uploaded a logo!' ? (
-            <Typography style={{ color: 'green' }}>Logo is uploaded!</Typography>
-          ) : null}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleLogoChange}
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-            />
-            <Button
-              onClick={handleUpload}
-              style={{
-                marginLeft: '10px',
-                marginBottom: '20px',
-                backgroundColor: 'linear-gradient(90deg, #000, #000, #333, #333, #333, #555, #555)', // Shaded background
-                color: '#000', // White text color
-                border: 'none',
-                padding: '10px 20px',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              }}
-            >
-              Upload
-            </Button>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-            <div
-              style={{
-                width: '48%',
-                borderRadius: '5px',
-                backgroundColor: '#f0f0f0',
-                height: '40px',
-                paddingLeft: '10px',
-                paddingTop: '5px',
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
-                elevation: '20',
-              }}
-            >
-              <Typography variant="h6" style={{ color: 'black', textAlign: 'left' }}>
-                <b>Created At:</b> {formatDate(teacher.createdAt)}
-              </Typography>
-            </div>
-            <div
-              style={{
-                width: '48%',
-                borderRadius: '5px',
-                backgroundColor: '#f0f0f0',
-                height: '40px',
-                paddingLeft: '10px',
-                paddingTop: '5px',
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
-                elevation: '20',
-              }}
-            >
-              <Typography variant="h6" style={{ color: 'black', textAlign: 'left' }}>
-                <b>Updated At:</b> {formatDate(teacher.updatedAt)}
-              </Typography>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-            <div style={{ width: '48%' }}>
-              <TextBox
-                inputText="First Name"
-                label="Enter new first name:"
-                width="100%"
-                type="text"
-                isMultiline={false}
-                defaultValue={teacher.firstName ? teacher.firstName : 'No first name available'}
-                onInputChange={handleFirstNameChange}
-              />
-            </div>
-            <div style={{ width: '48%' }}>
-              <TextBox
-                inputText="Last Name"
-                label="Enter new last name:"
-                width="100%"
-                type="text"
-                isMultiline={false}
-                defaultValue={teacher.lastName ? teacher.lastName : 'No last name available'}
-                onInputChange={handleLastNameChange}
-              />
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-            <div style={{ width: '48%' }}>
-              <TextBox
-                inputText="Email Address"
-                label="Enter new email address:"
-                width="100%"
-                type="text"
-                isMultiline={false}
-                defaultValue={teacher.email ? teacher.email : 'No email available'}
-                onInputChange={handleEmailChange}
-              />
-            </div>
-            <div style={{ width: '48%' }}>
-              <TextBox
-                inputText="Password"
-                label="Enter new password:"
-                width="100%"
-                type="password"
-                isMultiline={false}
-                defaultValue={'Password is not visible'}
-                onInputChange={handlePasswordChange}
-              />
-            </div>
-          </div>
-
-          <TextBox
-            inputText="Description"
-            label="Enter new descriptio:"
-            width="100%"
-            type="text"
-            isMultiline={true}
-            defaultValue={teacher.description ? teacher.description : 'No description available'}
-            onInputChange={handleDescriptionChange}
-          />
-
-          <div
-            style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}
-            onSubmit={handleUpdateSubmit}
+            <MainTopic text="Your Profile" />
+          </Paper>
+          <Paper
+            elevation={20}
+            style={{
+              padding: '20px',
+              width: '100%',
+              maxWidth: '1000px',
+              margin: '0 auto',
+              // backgroundColor: '#fafaf7',
+              backgroundImage: `url(https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)`,
+            }}
           >
-            {loading === 'Uploading' ? null : (
-              <PurpleButton label="Update" onClick={handleUpdateSubmit} />
-            )}
-          </div>
-          <Typography style={{ color: 'green' }}>{resposeMessage}</Typography>
-        </Paper>
-      </div>
-      <ToastContainer />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '30vh',
+              }}
+            >
+              <img
+                src={teacher.photo ? teacher.photo : 'https://via.placeholder.com/200'}
+                alt="logo"
+                style={{
+                  width: '200px',
+                  height: '200px',
+                  cursor: 'pointer',
+                  borderRadius: '20%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Add transitions
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.8)', // Add box-shadow
+                }}
+                hover={{
+                  transform: 'scale(1.5)',
+                  boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.9)',
+                }}
+                onClick={handleImageClick}
+              />
+            </div>
+            {loading === 'Uploading' ? <LoadingSpinner /> : null}
+            {loading === 'Uploaded a logo!' ? (
+              <Typography style={{ color: 'green' }}>Logo is uploaded!</Typography>
+            ) : null}
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleLogoChange}
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+              />
+              <Button
+                onClick={handleUpload}
+                style={{
+                  marginLeft: '10px',
+                  marginBottom: '20px',
+                  backgroundColor:
+                    'linear-gradient(90deg, #000, #000, #333, #333, #333, #555, #555)', // Shaded background
+                  color: '#000', // White text color
+                  border: 'none',
+                  padding: '10px 20px',
+                  cursor: 'pointer',
+                  borderRadius: '5px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                }}
+              >
+                Upload
+              </Button>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <div
+                style={{
+                  width: '48%',
+                  borderRadius: '5px',
+                  backgroundColor: '#f0f0f0',
+                  height: '40px',
+                  paddingLeft: '10px',
+                  paddingTop: '5px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+                  elevation: '20',
+                }}
+              >
+                <Typography variant="h6" style={{ color: 'black', textAlign: 'left' }}>
+                  <b>Created At:</b> {formatDate(teacher.createdAt)}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  width: '48%',
+                  borderRadius: '5px',
+                  backgroundColor: '#f0f0f0',
+                  height: '40px',
+                  paddingLeft: '10px',
+                  paddingTop: '5px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+                  elevation: '20',
+                }}
+              >
+                <Typography variant="h6" style={{ color: 'black', textAlign: 'left' }}>
+                  <b>Updated At:</b> {formatDate(teacher.updatedAt)}
+                </Typography>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <div style={{ width: '48%' }}>
+                <TextBox
+                  inputText="First Name"
+                  label="Enter new first name:"
+                  width="100%"
+                  type="text"
+                  isMultiline={false}
+                  defaultValue={teacher.firstName ? teacher.firstName : 'No first name available'}
+                  onInputChange={handleFirstNameChange}
+                />
+              </div>
+              <div style={{ width: '48%' }}>
+                <TextBox
+                  inputText="Last Name"
+                  label="Enter new last name:"
+                  width="100%"
+                  type="text"
+                  isMultiline={false}
+                  defaultValue={teacher.lastName ? teacher.lastName : 'No last name available'}
+                  onInputChange={handleLastNameChange}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <div style={{ width: '48%' }}>
+                <TextBox
+                  inputText="Email Address"
+                  label="Enter new email address:"
+                  width="100%"
+                  type="text"
+                  isMultiline={false}
+                  defaultValue={teacher.email ? teacher.email : 'No email available'}
+                  onInputChange={handleEmailChange}
+                />
+              </div>
+              <div style={{ width: '48%' }}>
+                <TextBox
+                  inputText="Password"
+                  label="Enter new password:"
+                  width="100%"
+                  type="password"
+                  isMultiline={false}
+                  defaultValue={'Password is not visible'}
+                  onInputChange={handlePasswordChange}
+                />
+              </div>
+            </div>
+
+            <TextBox
+              inputText="Description"
+              label="Enter new descriptio:"
+              width="100%"
+              type="text"
+              isMultiline={true}
+              defaultValue={teacher.description ? teacher.description : 'No description available'}
+              onInputChange={handleDescriptionChange}
+            />
+
+            <div
+              style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}
+              onSubmit={handleUpdateSubmit}
+            >
+              {loading === 'Uploading' ? null : (
+                <PurpleButton label="Update" onClick={handleUpdateSubmit} />
+              )}
+            </div>
+            <Typography style={{ color: 'green' }}>{resposeMessage}</Typography>
+          </Paper>
+        </div>
+        <ToastContainer />
+      </PageContainer>
     </>
   );
 };

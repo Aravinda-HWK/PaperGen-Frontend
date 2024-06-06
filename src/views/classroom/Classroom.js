@@ -1,34 +1,24 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PageContainer from 'src/components/container/PageContainer';
 
-import getDetails from 'src/api/customers/getDetails';
+import getClassrooms from 'src/api/classroom/getClassrroms';
 
 import jwt from 'jwt-decode';
 import Cookies from 'universal-cookie';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import Avatar from '@mui/material/Avatar';
 
-const Customers = () => {
+const Classroom = () => {
   const [pageSize, setPageSize] = useState(5);
   const [rows, setRows] = useState([]);
 
   const columns = useMemo(
     () => [
-      {
-        field: 'image_link',
-        headerName: 'Avator',
-        width: 70,
-        renderCell: (params) => <Avatar src={params.row.image_link} sx={{ width: 40, height: 40 }} />,
-        sortable: false,
-        filterable: false,
-      },
-      { field: 'name', headerName: 'Name', width: 180 },
-      { field: 'username', headerName: 'Username', width: 170 },
-      { field: 'title', headerName: 'Title', width: 300 },
-      { field: 'genre', headerName: 'Genre', width: 250 },
-      { field: 'ISBN', headerName: 'ISBN', width: 80 },
-      { field: 'price', headerName: 'Price', width: 80 },
+      { field: 'name', headerName: 'Class Name', width: 180 },
+      { field: 'numberOfStudents', headerName: 'Number of Students', width: 170 },
+      { field: 'description', headerName: 'Description', width: 300 },
+      { field: 'createdAt', headerName: 'Created At', width: 250 },
+      { field: 'updatedAt', headerName: 'Updated At', width: 80 },
     ],
     [],
   );
@@ -37,25 +27,25 @@ const Customers = () => {
     try {
       const cookies = new Cookies();
       const token = cookies.get('token');
-      const id = jwt(token)._id;
-      const data = await getDetails(id);
-      const newData = data.read_books;
+      const id = jwt(token).id;
+      console.log(id);
+      const data = await getClassrooms(id);
+      const newData = data;
+      console.log(newData);
       newData.forEach((item, index) => {
         let item1 = {
-          image_link: item.user_details.image_link,
-          name: item.user_details.name,
-          username: item.user_details.username,
-          title: item.book_details.title,
-          genre: item.book_details.genre,
-          ISBN: item.book_details.ISBN,
-          price: item.book_details.price,
           id: index,
+          name: item.name,
+          numberOfStudents: item.numberOfStudents,
+          description: item.description,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
         };
         setRows((rows) => [...rows, item1]);
       });
-      console.log(data);
     } catch (err) {
-      window.location.href = '/auth/login';
+      console.error('Error:', err);
+      // window.location.href = '/auth/teacherLogin';
     }
   };
 
@@ -64,7 +54,7 @@ const Customers = () => {
   }, []);
 
   return (
-    <PageContainer title="Customer" description="this is Customer Page">
+    <PageContainer title="Classroom" description="this is Classroom Page">
       <Box
         sx={{
           height: 400,
@@ -72,7 +62,7 @@ const Customers = () => {
         }}
       >
         <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
-          Manage Customers
+          Manage Classrooms
         </Typography>
         <DataGrid
           columns={columns}
@@ -109,4 +99,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default Classroom;
