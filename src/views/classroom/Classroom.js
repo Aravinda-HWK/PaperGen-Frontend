@@ -28,10 +28,8 @@ const Classroom = () => {
       const cookies = new Cookies();
       const token = cookies.get('token');
       const id = jwt(token).id;
-      console.log(id);
       const data = await getClassrooms(id);
       const newData = data;
-      console.log(newData);
       newData.forEach((item, index) => {
         let item1 = {
           id: index,
@@ -44,8 +42,7 @@ const Classroom = () => {
         setRows((rows) => [...rows, item1]);
       });
     } catch (err) {
-      console.error('Error:', err);
-      // window.location.href = '/auth/teacherLogin';
+      window.location.href = '/auth/teacherLogin';
     }
   };
 
