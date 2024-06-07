@@ -8,6 +8,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import PurpleButton from 'src/components/Buttons/PurpleButton';
 import deleteClassroom from 'src/api/classroom/deleteClassroom';
+import UserAction from './UserAction';
 
 const Classroom = () => {
   const [pageSize, setPageSize] = useState(5);
@@ -19,11 +20,19 @@ const Classroom = () => {
 
   const columns = useMemo(
     () => [
-      { field: 'name', headerName: 'Class Name', width: 180 },
+      { field: 'name', headerName: 'Class Name', width: 150, editable: true },
       { field: 'numberOfStudents', headerName: 'Number of Students', width: 150 },
-      { field: 'description', headerName: 'Description', width: 300 },
+      { field: 'description', headerName: 'Description', width: 240, editable: true },
       { field: 'createdAt', headerName: 'Created At', width: 230 },
       { field: 'updatedAt', headerName: 'Updated At', width: 230 },
+      {
+        field: 'actions',
+        headerName: 'Actions',
+        type: 'actions',
+        renderCell: (params) => (
+          <UserAction {...{ params, rowId, setRowId, selectionModel, idList }} />
+        ),
+      },
     ],
     [rowId, selectionModel],
   );
