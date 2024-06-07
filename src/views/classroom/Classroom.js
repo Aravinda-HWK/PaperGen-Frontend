@@ -1,27 +1,52 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PageContainer from 'src/components/container/PageContainer';
-
 import getClassrooms from 'src/api/classroom/getClassrroms';
-
 import jwt from 'jwt-decode';
 import Cookies from 'universal-cookie';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import moment from 'moment';
+import PurpleButton from 'src/components/Buttons/PurpleButton';
+import deleteClassroom from 'src/api/classroom/deleteClassroom';
 
 const Classroom = () => {
   const [pageSize, setPageSize] = useState(5);
   const [rows, setRows] = useState([]);
+  const [idList, setIdList] = useState([]);
+  const [rowId, setRowId] = useState(null);
+  const [selectionModel, setSelectionModel] = useState([]);
+  const [message, setMessage] = useState('');
 
   const columns = useMemo(
     () => [
       { field: 'name', headerName: 'Class Name', width: 180 },
-      { field: 'numberOfStudents', headerName: 'Number of Students', width: 170 },
+      { field: 'numberOfStudents', headerName: 'Number of Students', width: 150 },
       { field: 'description', headerName: 'Description', width: 300 },
-      { field: 'createdAt', headerName: 'Created At', width: 250 },
-      { field: 'updatedAt', headerName: 'Updated At', width: 80 },
+      { field: 'createdAt', headerName: 'Created At', width: 230 },
+      { field: 'updatedAt', headerName: 'Updated At', width: 230 },
     ],
-    [],
+    [rowId, selectionModel],
   );
+
+  const formatDate = (date) => {
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+  };
+
+  const handleDelete = async () => {
+    console.log(rows[selectionModel[0]]);
+    console.log(idList[selectionModel[0]]);
+
+    for (const element of selectionModel) {
+      const response = await deleteClassroom(idList[element]);
+      console.log(response);
+    }
+
+    setMessage('Classroom Deleted Successfully');
+    setTimeout(() => {
+      setMessage('');
+      window.location.reload();
+    }, 1000);
+  };
 
   const fetchData = async () => {
     try {
@@ -36,10 +61,11 @@ const Classroom = () => {
           name: item.name,
           numberOfStudents: item.numberOfStudents,
           description: item.description,
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt,
+          createdAt: formatDate(item.createdAt),
+          updatedAt: formatDate(item.updatedAt),
         };
         setRows((rows) => [...rows, item1]);
+        setIdList((idList) => [...idList, item.id]);
       });
     } catch (err) {
       window.location.href = '/auth/teacherLogin';
@@ -73,24 +99,53 @@ const Classroom = () => {
             top: params.isFirstVisible ? 0 : 5,
             bottom: params.isLastVisible ? 0 : 5,
           })}
+          checkboxSelection
+          selectionModel={selectionModel}
+          onRowSelectionModelChange={(newSelectionModel) => {
+            setSelectionModel(newSelectionModel);
+          }}
           sx={{
             '& .MuiDataGrid-cell--textLeft': {
               textAlign: 'left',
             },
             '& .MuiDataGrid-columnsContainer': {
-              backgroundColor: (theme) => (theme.palette.mode === 'light' ? '#fafafa' : '#1c2125'),
+              backgroundColor: (theme) => (theme.palette.mode === 'light' ? 'white' : '#1c2125'),
             },
             '& .MuiDataGrid-iconSeparator': {
               display: 'none',
             },
             '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-              borderRight: `2px solid rgba(224, 224, 224, 1)`,
+              borderRight: `2px solid black`,
+              borderBottom: `2px solid black`,
+              borderLeft: `2px solid black`,
+              borderTop: `2px solid black`,
             },
-            '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
-              borderBottom: `3px solid rgba(224, 224, 224, 1)`,
+            '& .MuiDataGrid-columnHeaderTitle': {
+              fontWeight: 'bold',
+              fontSize: '1.1em',
+              fontFamily: 'times new roman',
+              color: 'black',
+            },
+            '& .MuiDataGrid-columnHeader': {
+              backgroundColor: 'lightgray', // Set header background color
             },
           }}
+          onCellEditStop={(params) => {
+            // This callback is called when a cell is edited and committed.
+            // You can access the row ID using params.id.
+            const editedRowId = params.id;
+            setRowId(editedRowId); // Update the rowId state with the edited row ID
+          }}
         />
+      </Box>
+      <div
+        style={{
+          padding: '25px',
+        }}
+      ></div>
+      <PurpleButton label={'Delete Classroom'} onClick={handleDelete} />
+      <Box>
+        <Typography style={{ color: 'green', textDecoration: 'none' }}>{message}</Typography>
       </Box>
     </PageContainer>
   );

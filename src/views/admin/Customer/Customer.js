@@ -7,7 +7,7 @@ import moment from 'moment';
 import Avatar from '@mui/material/Avatar';
 import UserAction from './UserAction';
 import PurpleButton from 'src/components/Buttons/PurpleButton';
-import deleteUser from 'src/api/classroom/deleteUser';
+// import deleteUser from 'src/api/classroom/deleteClassroom';
 import { getAdminToken } from 'src/config/token/getAdminToken';
 
 const Customer = () => {
@@ -86,13 +86,13 @@ const Customer = () => {
   }, []);
 
   const handleDelete = async () => {
-    console.log(selectionModel);
-    for (const element of selectionModel) {
-      const response = await deleteUser(element);
-      console.log(response);
-    }
-    setMessage('Publisher Deleted Successfully');
-    fetchData();
+    // console.log(selectionModel);
+    // for (const element of selectionModel) {
+    //   const response = await deleteUser(element);
+    //   console.log(response);
+    // }
+    // setMessage('Publisher Deleted Successfully');
+    // fetchData();
   };
 
   return (
