@@ -10,7 +10,6 @@ const AdminLayout = Loadable(lazy(() => import('../layouts/Admin/full/FullLayout
 /* ****Pages***** */
 const Products = Loadable(lazy(() => import('../views/products/Products')));
 const RegisterPage = Loadable(lazy(() => import('../views/books/RegisterPage')));
-const Icons = Loadable(lazy(() => import('../views/icons/Icons')));
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Register = Loadable(lazy(() => import('../views/authentication/Register')));
 const TeacherLogin = Loadable(lazy(() => import('../views/authentication/TeacherLogin')));
@@ -43,7 +42,6 @@ const Router = [
       { path: '/aboutus', exact: true, element: <AboutUs /> },
       { path: '/bookdetails', exact: true, element: <BoookDetailsPage /> },
       { path: '/profile', exact: true, element: <Profile /> },
-      { path: '/icons', exact: true, element: <Icons /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
