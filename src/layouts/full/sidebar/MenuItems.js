@@ -6,7 +6,6 @@ import {
   IconBrandProducthunt,
   IconAccessible,
   IconCards,
-  IconAugmentedReality,
   IconSchool,
 } from '@tabler/icons';
 
@@ -41,13 +40,6 @@ const Menuitems = [
     icon: IconCards,
     href: '/customers',
   },
-  {
-    id: uniqueId(),
-    title: 'AR Content',
-    icon: IconAugmentedReality,
-    href: '/arcontent',
-  },
-
   {
     id: uniqueId(),
     title: 'Book Register',
