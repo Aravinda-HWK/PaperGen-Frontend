@@ -7,6 +7,7 @@ import {
   IconAccessible,
   IconCards,
   IconSchool,
+  IconBook,
 } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
@@ -27,6 +28,12 @@ const Menuitems = [
     title: 'Classroom',
     icon: IconSchool,
     href: '/classroom',
+  },
+  {
+    id: uniqueId(),
+    title: 'Student List',
+    icon: IconBook,
+    href: '/studentlist',
   },
   {
     id: uniqueId(),
