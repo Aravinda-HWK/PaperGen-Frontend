@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 import deleteClassroom from 'src/api/classroom/deleteClassroom';
 import UserAction from './UserAction';
 

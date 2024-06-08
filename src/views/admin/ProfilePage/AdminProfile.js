@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import TextBox from 'src/components/TextBox/TextBox';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 import MainTopic from 'src/components/Topic/MainTopic';
 import LoadingSpinner from 'src/components/Spinner/Spinner';
 import jwt from 'jwt-decode';

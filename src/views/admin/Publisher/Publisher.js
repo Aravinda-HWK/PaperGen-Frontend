@@ -5,7 +5,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import getAll from 'src/api/publisher/getAll';
 import Avatar from '@mui/material/Avatar';
 import UserAction from './UserAction';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 import deletePublisher from 'src/api/publisher/deletePublisher';
 
 const Publisher = () => {

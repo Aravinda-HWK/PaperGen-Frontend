@@ -6,7 +6,7 @@ import getAll from 'src/api/classroom/getAll';
 import moment from 'moment';
 import Avatar from '@mui/material/Avatar';
 import UserAction from './UserAction';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 // import deleteUser from 'src/api/classroom/deleteClassroom';
 import { getAdminToken } from 'src/config/token/getAdminToken';
 

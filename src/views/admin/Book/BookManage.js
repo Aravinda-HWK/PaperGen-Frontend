@@ -5,7 +5,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import getAll from 'src/api/book/getBookPublisher';
 import Avatar from '@mui/material/Avatar';
 import UserAction from './UserAction';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 import deleteBook from 'src/api/book/book_delete';
 import { getAdminToken } from 'src/config/token/getAdminToken';
 
@@ -147,11 +147,11 @@ const BookManage = () => {
           }}
         />
       </Box>
-      <div style={{
-        padding: '30px',
-      }}>
-
-      </div>
+      <div
+        style={{
+          padding: '30px',
+        }}
+      ></div>
       <PurpleButton label={'Delete Book'} onClick={handleDelete} />
       <Box>
         <Typography style={{ color: 'green', textDecoration: 'none' }}>{message}</Typography>

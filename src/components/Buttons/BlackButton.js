@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 
-const PurpleButton = ({ label, onClick }) => {
+const BlackButton = ({ label, onClick }) => {
   return (
     <Button
       data-testid="Click me" // Test id for testing
@@ -9,18 +9,19 @@ const PurpleButton = ({ label, onClick }) => {
       color="primary"
       onClick={onClick}
       sx={{
-        backgroundColor: '#1f244f', // Purple color
+        backgroundColor: 'black', // Background color
         '&:hover': {
-          backgroundColor: '#7b1fa2', // Darker shade on hover
+          backgroundColor: 'blue', // Darker shade on hover
         },
         '&:active': {
-          backgroundColor: '#4a148c', // Even darker shade on click
+          backgroundColor: 'blue', // Even darker shade on click
         },
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Shadow effect
-        borderRadius: '5px', // Rounded corners
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.8)', // Shadow effect
+        borderRadius: '10px', // Rounded corners
         fontSize: '16px', // Font size
         padding: '10px 20px', // Padding
         fontWeight: 'bold', // Bold font weight
+        elevation: 10, // Elevation
       }}
     >
       {label}
@@ -28,4 +29,4 @@ const PurpleButton = ({ label, onClick }) => {
   );
 };
 
-export default PurpleButton;
+export default BlackButton;

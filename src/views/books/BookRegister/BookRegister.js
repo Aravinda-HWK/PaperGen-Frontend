@@ -11,7 +11,7 @@ import jwt from 'jwt-decode';
 import backgroundImg from 'src/assets/images/backgrounds/background.jpg';
 import { Paper } from '@mui/material';
 import MainTopic from 'src/components/Topic/MainTopic';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 import { InputAdornment } from '@mui/material';
 import bookRegister from 'src/api/book/book_register';
 import DropDownList from 'src/components/DropDownList/DropDownList';
@@ -160,7 +160,7 @@ const BookRegister = ({ title, subtitle, subtext }) => {
   const handleSubmit = async (e) => {
     console.log('id is ', id);
     console.log(ISBN);
-    
+
     if (Title === '') {
       toast.error('Title cannot be empty!', {
         position: toast.POSITION.TOP_RIGHT,
@@ -185,7 +185,7 @@ const BookRegister = ({ title, subtitle, subtext }) => {
       });
       return;
     }
-    if (ISBN.toInteger===false) {
+    if (ISBN.toInteger === false) {
       toast.error('ISBN must be a number!', {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -439,7 +439,7 @@ const BookRegister = ({ title, subtitle, subtext }) => {
                 >
                   Upload PDF
                 </Typography>
-               
+
                 <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                   Choose PDF
                   <VisuallyHiddenInput
@@ -462,7 +462,6 @@ const BookRegister = ({ title, subtitle, subtext }) => {
                     Upload Coverpage
                   </Typography>
 
-                 
                   <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                     Choose Coverpage
                     <VisuallyHiddenInput

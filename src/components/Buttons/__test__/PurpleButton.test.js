@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, getByTestId } from '@testing-library/react';
-import PurpleButton from '../PurpleButton';
+import PurpleButton from '../BlackButton';
 
 describe(PurpleButton, () => {
   it('Puple button is rendered correctly', () => {
@@ -13,7 +13,7 @@ describe(PurpleButton, () => {
     const onClickMock = jest.fn();
     const { getByTestId } = render(<PurpleButton label="Click me" onClick={onClickMock} />);
     const buttonElement = getByTestId('Click me');
-    
+
     fireEvent.click(buttonElement);
 
     expect(onClickMock).toHaveBeenCalled();

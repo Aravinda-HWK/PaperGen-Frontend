@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageContainer from 'src/components/container/PageContainer';
 import OtpInput from 'src/components/OTPInput/OtpInput';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 import image from 'src/assets/images/OTP page/dried-flowers-notebook.jpg';
 import image1 from 'src/assets/images/OTP page/11857.jpg';
 import image2 from 'src/assets/images/OTP page/blue-brushstrokes-background.jpg';
@@ -28,17 +28,16 @@ const OTPVerification = () => {
     if (responseData.message === 'OTP is verified successfully.') {
       console.log(responseData);
       swal({
-        title: "Done!",
-        text: "Publisher is registered successfully.",
-        icon: "success",
+        title: 'Done!',
+        text: 'Publisher is registered successfully.',
+        icon: 'success',
         timer: 2000,
-        button: false
-      })
-       // Use setTimeout to wait for 2 seconds before executing the following code
-       setTimeout(() => {
+        button: false,
+      });
+      // Use setTimeout to wait for 2 seconds before executing the following code
+      setTimeout(() => {
         window.location.href = `/auth/login`;
       }, 1000); // Also set the delay here to 2000 milliseconds (2 seconds)
-      
     } else {
       setErrormessage(responseData.message);
       console.log(responseData);

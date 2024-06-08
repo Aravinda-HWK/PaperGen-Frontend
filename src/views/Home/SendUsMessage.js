@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, TextField } from '@mui/material';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 import image from 'src/assets/images/home/8.jpg';
 
 function SendUsMessage(props) {

@@ -7,7 +7,7 @@ import { getAuthToken } from '../authentication/auth/TeacherAuthLogin';
 import jwt from 'jwt-decode';
 import Avatar from '@mui/material/Avatar';
 import deleteBook from 'src/api/book/book_delete';
-import PurpleButton from 'src/components/Buttons/PurpleButton';
+import PurpleButton from 'src/components/Buttons/BlackButton';
 import publisherBook from 'src/api/products/publisher_book';
 import { DataGrid } from '@mui/x-data-grid';
 
