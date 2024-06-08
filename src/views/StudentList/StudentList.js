@@ -1,38 +1,39 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PageContainer from 'src/components/container/PageContainer';
-import getClassrooms from 'src/api/classroom/getClassrroms';
+import getStudentForTeacher from 'src/api/student/getStudentForTeacher';
 import jwt from 'jwt-decode';
 import Cookies from 'universal-cookie';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import PurpleButton from 'src/components/Buttons/PurpleButton';
-import deleteClassroom from 'src/api/classroom/deleteClassroom';
-import UserAction from './UserAction';
+import deleteStudentClassroom from 'src/api/student/deleteStudentClassroom';
+import Avatar from '@mui/material/Avatar';
 
 const StudentList = () => {
   const [pageSize, setPageSize] = useState(5);
   const [rows, setRows] = useState([]);
-  const [idList, setIdList] = useState([]);
   const [rowId, setRowId] = useState(null);
   const [selectionModel, setSelectionModel] = useState([]);
   const [message, setMessage] = useState('');
 
   const columns = useMemo(
     () => [
-      { field: 'name', headerName: 'Class Name', width: 150, editable: true },
-      { field: 'numberOfStudents', headerName: 'Number of Students', width: 150 },
-      { field: 'description', headerName: 'Description', width: 240, editable: true },
-      { field: 'createdAt', headerName: 'Created At', width: 230 },
-      { field: 'updatedAt', headerName: 'Updated At', width: 230 },
       {
-        field: 'actions',
-        headerName: 'Actions',
-        type: 'actions',
-        renderCell: (params) => (
-          <UserAction {...{ params, rowId, setRowId, selectionModel, idList }} />
-        ),
+        field: 'photo',
+        headerName: 'Avator',
+        width: 70,
+        renderCell: (params) => <Avatar src={params.row.photo} sx={{ width: 40, height: 40 }} />,
+        sortable: false,
+        filterable: false,
       },
+      { field: 'classroom', headerName: 'Classroom', width: 100 },
+      { field: 'firstName', headerName: 'First Name', width: 100 },
+      { field: 'lastName', headerName: 'Last Name', width: 100 },
+      { field: 'email', headerName: 'Email', width: 220 },
+      { field: 'description', headerName: 'Description', width: 200 },
+      { field: 'createdAt', headerName: 'Created At', width: 220 },
+      { field: 'updatedAt', headerName: 'Updated At', width: 220 },
     ],
     [rowId, selectionModel],
   );
@@ -43,14 +44,16 @@ const StudentList = () => {
 
   const handleDelete = async () => {
     console.log(rows[selectionModel[0]]);
-    console.log(idList[selectionModel[0]]);
 
     for (const element of selectionModel) {
-      const response = await deleteClassroom(idList[element]);
+      const response = await deleteStudentClassroom(
+        rows[element].classroomId,
+        rows[element].studentId,
+      );
       console.log(response);
     }
 
-    setMessage('Classroom Deleted Successfully');
+    setMessage('Student is removed from the classroom successfully!');
     setTimeout(() => {
       setMessage('');
       window.location.reload();
@@ -62,19 +65,23 @@ const StudentList = () => {
       const cookies = new Cookies();
       const token = cookies.get('token');
       const id = jwt(token).id;
-      const data = await getClassrooms(id);
+      const data = await getStudentForTeacher(id);
       const newData = data;
       newData.forEach((item, index) => {
         let item1 = {
           id: index,
-          name: item.name,
-          numberOfStudents: item.numberOfStudents,
+          photo: item.photo,
+          firstName: item.firstName,
+          lastName: item.lastName,
+          email: item.email,
+          classroom: item.classroom.name,
           description: item.description,
           createdAt: formatDate(item.createdAt),
           updatedAt: formatDate(item.updatedAt),
+          classroomId: item.classroom.id,
+          studentId: item.id,
         };
         setRows((rows) => [...rows, item1]);
-        setIdList((idList) => [...idList, item.id]);
       });
     } catch (err) {
       window.location.href = '/auth/teacherLogin';
@@ -86,7 +93,7 @@ const StudentList = () => {
   }, []);
 
   return (
-    <PageContainer title="Classroom" description="this is Classroom Page">
+    <PageContainer title="Student List" description="this is Student List Page">
       <Box
         sx={{
           height: 400,
@@ -94,7 +101,7 @@ const StudentList = () => {
         }}
       >
         <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
-          Manage Classrooms
+          Manage Student List
         </Typography>
         <DataGrid
           columns={columns}
@@ -152,7 +159,7 @@ const StudentList = () => {
           padding: '25px',
         }}
       ></div>
-      <PurpleButton label={'Delete Classroom'} onClick={handleDelete} />
+      <PurpleButton label={'Remove Student'} onClick={handleDelete} />
       <Box>
         <Typography style={{ color: 'green', textDecoration: 'none' }}>{message}</Typography>
       </Box>
