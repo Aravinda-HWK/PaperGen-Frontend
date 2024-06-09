@@ -18,6 +18,7 @@ const Classroom = () => {
   const [rowId, setRowId] = useState(null);
   const [selectionModel, setSelectionModel] = useState([]);
   const [message, setMessage] = useState('');
+  const [id, setId] = useState('');
 
   const columns = useMemo(
     () => [
@@ -43,8 +44,10 @@ const Classroom = () => {
   };
 
   const handleDelete = async () => {
-    console.log(rows[selectionModel[0]]);
-    console.log(idList[selectionModel[0]]);
+    if (selectionModel.length === 0) {
+      setMessage('Please select a classroom to delete');
+      return;
+    }
 
     for (const element of selectionModel) {
       const response = await deleteClassroom(idList[element]);
@@ -63,6 +66,7 @@ const Classroom = () => {
       const cookies = new Cookies();
       const token = cookies.get('token');
       const id = jwt(token).id;
+      setId(id);
       const data = await getClassrooms(id);
       const newData = data;
       newData.forEach((item, index) => {
@@ -163,12 +167,15 @@ const Classroom = () => {
           padding: '25px',
         }}
       ></div>
-      <BlackButton label={'Add Classroom'} onClick={handleClickOpen} />
-      <BlackButton label={'Delete Classroom'} onClick={handleDelete} />
+      <div style={{ display: 'flex', gap: '20px', marginBottom: '25px' }}>
+        <BlackButton label={'Add Classroom'} onClick={handleClickOpen} />
+        <BlackButton label={'Delete Classroom'} onClick={handleDelete} />
+      </div>
+
       <Box>
         <Typography style={{ color: 'green', textDecoration: 'none' }}>{message}</Typography>
       </Box>
-      <CreateClassroom open={open} onClose={handleClose} />
+      <CreateClassroom open={open} onClose={handleClose} id={id} />
     </PageContainer>
   );
 };
