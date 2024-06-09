@@ -6,9 +6,10 @@ import Cookies from 'universal-cookie';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
-import PurpleButton from 'src/components/Buttons/BlackButton';
+import BlackButton from 'src/components/Buttons/BlackButton';
 import deleteClassroom from 'src/api/classroom/deleteClassroom';
 import UserAction from './UserAction';
+import CreateClassroom from './CreateClassroom';
 
 const Classroom = () => {
   const [pageSize, setPageSize] = useState(5);
@@ -85,6 +86,16 @@ const Classroom = () => {
     fetchData();
   }, []);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <PageContainer title="Classroom" description="this is Classroom Page">
       <Box
@@ -152,10 +163,12 @@ const Classroom = () => {
           padding: '25px',
         }}
       ></div>
-      <PurpleButton label={'Delete Classroom'} onClick={handleDelete} />
+      <BlackButton label={'Add Classroom'} onClick={handleClickOpen} />
+      <BlackButton label={'Delete Classroom'} onClick={handleDelete} />
       <Box>
         <Typography style={{ color: 'green', textDecoration: 'none' }}>{message}</Typography>
       </Box>
+      <CreateClassroom open={open} onClose={handleClose} />
     </PageContainer>
   );
 };
