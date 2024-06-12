@@ -10,6 +10,7 @@ import BlackButton from 'src/components/Buttons/BlackButton';
 import deleteClassroom from 'src/api/classroom/deleteClassroom';
 import UserAction from './UserAction';
 import CreateClassroom from './CreateClassroom';
+import AddStudent from './AddStudent';
 
 const Classroom = () => {
   const [pageSize, setPageSize] = useState(5);
@@ -91,13 +92,30 @@ const Classroom = () => {
   }, []);
 
   const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  const handleClickOpen1 = () => {
+    if (selectionModel.length === 0) {
+      setMessage('Please select a classroom to add student');
+      return;
+    } else if (selectionModel.length > 1) {
+      setMessage('Please select only one classroom to add student');
+      return;
+    }
+    setMessage('');
+    setOpen1(true);
+  };
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(false);
   };
 
   return (
@@ -170,12 +188,14 @@ const Classroom = () => {
       <div style={{ display: 'flex', gap: '20px', marginBottom: '25px' }}>
         <BlackButton label={'Add Classroom'} onClick={handleClickOpen} />
         <BlackButton label={'Delete Classroom'} onClick={handleDelete} />
+        <BlackButton label={'Add Student'} onClick={handleClickOpen1} />
       </div>
 
       <Box>
         <Typography style={{ color: 'green', textDecoration: 'none' }}>{message}</Typography>
       </Box>
       <CreateClassroom open={open} onClose={handleClose} id={id} />
+      <AddStudent open={open1} onClose={handleClose1} id={idList[selectionModel[0]]} />
     </PageContainer>
   );
 };
