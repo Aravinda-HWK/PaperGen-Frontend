@@ -8,7 +8,6 @@ const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')))
 const AdminLayout = Loadable(lazy(() => import('../layouts/Admin/full/FullLayout')));
 
 /* ****Pages***** */
-const Products = Loadable(lazy(() => import('../views/products/Products')));
 const RegisterPage = Loadable(lazy(() => import('../views/books/RegisterPage')));
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Register = Loadable(lazy(() => import('../views/authentication/Register')));
@@ -37,7 +36,6 @@ const Router = [
     children: [
       { path: '/', element: <Navigate to="/auth/teacherLogin" /> },
       { path: '/home', exact: true, element: <HomePage /> },
-      { path: '/products', exact: true, element: <Products /> },
       { path: '/classroom', exact: true, element: <Classroom /> },
       { path: '/studentlist', exact: true, element: <StudentList /> },
       { path: '/registerbook', exact: true, element: <RegisterPage /> },

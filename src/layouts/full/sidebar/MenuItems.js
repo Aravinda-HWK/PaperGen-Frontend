@@ -3,9 +3,7 @@ import {
   IconBook2,
   IconUserPlus,
   IconHome,
-  IconBrandProducthunt,
   IconAccessible,
-  IconCards,
   IconSchool,
   IconBook,
 } from '@tabler/icons';
@@ -34,18 +32,6 @@ const Menuitems = [
     title: 'Student List',
     icon: IconBook,
     href: '/studentlist',
-  },
-  {
-    id: uniqueId(),
-    title: 'Products',
-    icon: IconBrandProducthunt,
-    href: '/products',
-  },
-  {
-    id: uniqueId(),
-    title: 'Customers',
-    icon: IconCards,
-    href: '/customers',
   },
   {
     id: uniqueId(),
