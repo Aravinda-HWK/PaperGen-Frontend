@@ -8,15 +8,11 @@ const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')))
 const AdminLayout = Loadable(lazy(() => import('../layouts/Admin/full/FullLayout')));
 
 /* ****Pages***** */
-const RegisterPage = Loadable(lazy(() => import('../views/books/RegisterPage')));
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Register = Loadable(lazy(() => import('../views/authentication/Register')));
 const TeacherLogin = Loadable(lazy(() => import('../views/authentication/TeacherLogin')));
 const ForgotPassword = Loadable(lazy(() => import('../views/authentication/Forgetpassword')));
 const AuthResetPassword = Loadable(lazy(() => import('../views/authentication/ResetPassword')));
-const BoookDetailsPage = Loadable(
-  lazy(() => import('../views/books/BookDetails/BoookDetailsPage')),
-);
 const Profile = Loadable(lazy(() => import('../views/ProfilePage/Profile')));
 const HomePage = Loadable(lazy(() => import('../views/Home/HomePage')));
 const AboutUs = Loadable(lazy(() => import('../views/AboutUs/AboutUs')));
@@ -40,9 +36,7 @@ const Router = [
       { path: '/classroom', exact: true, element: <Classroom /> },
       { path: '/studentlist', exact: true, element: <StudentList /> },
       { path: '/createpaper', exact: true, element: <Paper /> },
-      { path: '/registerbook', exact: true, element: <RegisterPage /> },
       { path: '/aboutus', exact: true, element: <AboutUs /> },
-      { path: '/bookdetails', exact: true, element: <BoookDetailsPage /> },
       { path: '/profile', exact: true, element: <Profile /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],

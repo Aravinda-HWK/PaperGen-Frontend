@@ -1,6 +1,5 @@
 import {
   IconLogin,
-  IconBook2,
   IconUserPlus,
   IconHome,
   IconAccessible,
@@ -39,12 +38,6 @@ const Menuitems = [
     title: 'Create Paper',
     icon: IconPackage,
     href: '/createpaper',
-  },
-  {
-    id: uniqueId(),
-    title: 'Book Register',
-    icon: IconBook2,
-    href: '/registerbook',
   },
   {
     id: uniqueId(),
