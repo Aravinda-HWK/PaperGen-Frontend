@@ -6,6 +6,7 @@ import {
   IconSchool,
   IconBook,
   IconPackage,
+  IconQuestionCircle,
 } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
@@ -38,6 +39,12 @@ const Menuitems = [
     title: 'Create Paper',
     icon: IconPackage,
     href: '/createpaper',
+  },
+  {
+    id: uniqueId(),
+    title: 'Create Question',
+    icon: IconQuestionCircle,
+    href: '/createquestion',
   },
   {
     id: uniqueId(),
