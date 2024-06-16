@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import BackgoundImage from 'src/assets/images/Paper/pexels-didsss-3527796.jpg';
 import getPapers from 'src/api/paper/getPapers';
+import createQuestion from 'src/api/question/createQuestion';
 import jwt from 'jwt-decode';
 import Cookies from 'universal-cookie';
 
@@ -25,6 +26,7 @@ const QuestionComponent = () => {
   const [papers, setPapers] = useState([]);
   const [selectedPaper, setSelectedPaper] = useState('');
   const [numberOfQuestions, setNumberOfQuestions] = useState(0);
+  const [message, setMessage] = useState('');
 
   const fetchData = async () => {
     try {
@@ -63,10 +65,22 @@ const QuestionComponent = () => {
     setNumberOfQuestions(paper.numberOfQuestions);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
-    // Handle form submission, e.g., save to a server or display the data
+    const data = {
+      content: question,
+      sampleAnswer: answers,
+      correctAnswer,
+      paperId: selectedPaper,
+    };
+    const response = await createQuestion(data);
+    if (!response.error) {
+      setSubmitted(true);
+      setMessage('Question is created successfully!');
+    } else {
+      setSubmitted(false);
+    }
   };
 
   return (
@@ -179,12 +193,17 @@ const QuestionComponent = () => {
                 ))}
               </Select>
             </FormControl>
+            <Box marginBottom={2}>
+              <Typography variant="body1" sx={{ color: 'green' }}>
+                {message}
+              </Typography>
+            </Box>
             <Button type="submit" variant="contained" color="primary">
               Submit
             </Button>
           </form>
         </Paper>
-        {submitted && (
+        {submitted && message === 'Question is created successfully!' && (
           <Paper
             elevation={20}
             sx={{
