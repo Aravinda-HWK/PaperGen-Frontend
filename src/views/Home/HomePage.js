@@ -10,6 +10,7 @@ const Home = () => {
     <>
       <CssBaseline />
       <Header />
+      <div style={{ marginTop: 20 }} />
       <Container maxWidth="lg">
         <HeroSection />
         <Features />
