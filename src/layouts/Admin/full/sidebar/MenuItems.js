@@ -1,51 +1,25 @@
-import {
-   IconLogin, IconUserPlus, IconHome,IconAccessible,IconBadgeAd,IconCards,IconBuildingStore,IconBook
-} from '@tabler/icons';
+import { IconLogin, IconUserPlus, IconHome, IconAccessible } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
 
 const Menuitems = [
   {
     navlabel: true,
-    subheader: 'Home'  
-  },
-  {
-    id:uniqueId(),
-    title: 'Home',
-    icon: IconHome,
-    href: '/admin/home',
-  },
-  {
-    id : uniqueId(),
-    title: 'Add Admin',
-    icon: IconBadgeAd,
-    href: '/admin/addadmin',
-  },
-  {
-    id : uniqueId(),
-    title: 'Customer',
-    icon: IconCards,
-    href: '/admin/customers',
-  },
-  {
-    id : uniqueId(),
-    title: 'Publisher',
-    icon: IconBuildingStore,
-    href: '/admin/publisher',
+    subheader: 'Home',
   },
   {
     id: uniqueId(),
-    title: 'Book',
-    icon: IconBook,
-    href: '/admin/book',
+    title: 'Home',
+    icon: IconHome,
+    href: '/student/home',
   },
   {
-    id : uniqueId(),
+    id: uniqueId(),
     title: 'About us',
     icon: IconAccessible,
-    href: '/admin/aboutus',
+    href: '/student/aboutus',
   },
-  
+
   {
     navlabel: true,
     subheader: 'Auth',
@@ -54,7 +28,7 @@ const Menuitems = [
     id: uniqueId(),
     title: 'Login',
     icon: IconLogin,
-    href: '/auth/login',
+    href: '/auth/teacherLogin',
   },
   {
     id: uniqueId(),
@@ -62,7 +36,6 @@ const Menuitems = [
     icon: IconUserPlus,
     href: '/auth/register',
   },
-  
 ];
 
 export default Menuitems;

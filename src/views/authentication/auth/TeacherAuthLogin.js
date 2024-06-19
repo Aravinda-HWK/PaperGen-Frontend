@@ -79,6 +79,7 @@ const TeacherAuthLogin = ({ title, subtext }) => {
       }
     } else {
       const userSchemaResponse = await userSchema.validate(loginData, { abortEarly: false });
+      console.log(userSchemaResponse);
 
       if (userSchemaResponse.error) {
         setErrorMessege(userSchemaResponse.message[0]);
@@ -90,7 +91,7 @@ const TeacherAuthLogin = ({ title, subtext }) => {
         if (responseData.access_token) {
           swal({
             title: 'Done!',
-            text: 'Login as a publisher.',
+            text: 'Login as a Student.',
             icon: 'success',
             timer: 1000, // Set the timer to 2000 milliseconds (2 seconds)
             button: false,
@@ -98,8 +99,8 @@ const TeacherAuthLogin = ({ title, subtext }) => {
 
           // Use setTimeout to wait for 2 seconds before executing the following code
           setTimeout(() => {
-            cookies.set('token', responseData.access_token, { path: '/' });
-            window.location.href = `/admin/home`;
+            cookies.set('student_token', responseData.access_token, { path: '/' });
+            window.location.href = `/student/home`;
           }, 1000); // Also set the delay here to 2000 milliseconds (2 seconds)
         } else {
           setErrorMessege(responseData.message);

@@ -21,11 +21,6 @@ const Paper = Loadable(lazy(() => import('../views/paper/Paper')));
 const AddQuestion = Loadable(lazy(() => import('../views/question/Question')));
 const StudentList = Loadable(lazy(() => import('../views/StudentList/StudentList')));
 const OTPVerification = Loadable(lazy(() => import('../views/OTPVerfication/OTPVerification')));
-const AdminProfile = Loadable(lazy(() => import('../views/admin/ProfilePage/AdminProfile')));
-const AddAdmin = Loadable(lazy(() => import('../views/admin/AddAdmin/AddAdmin')));
-const AdminCustomer = Loadable(lazy(() => import('../views/admin/Customer/Customer')));
-const AdminPublisher = Loadable(lazy(() => import('../views/admin/Publisher/Publisher')));
-const BookManage = Loadable(lazy(() => import('../views/admin/Book/BookManage')));
 
 const Router = [
   {
@@ -57,16 +52,11 @@ const Router = [
     ],
   },
   {
-    path: '/admin',
+    path: '/student',
     element: <AdminLayout />,
     children: [
-      { path: '/admin/home', exact: true, element: <HomePage /> },
-      { path: '/admin/aboutus', exact: true, element: <AboutUs /> },
-      { path: '/admin/profile', exact: true, element: <AdminProfile /> },
-      { path: '/admin/addadmin', exact: true, element: <AddAdmin /> },
-      { path: '/admin/customers', exact: true, element: <AdminCustomer /> },
-      { path: '/admin/book', exact: true, element: <BookManage /> },
-      { path: '/admin/publisher', exact: true, element: <AdminPublisher /> },
+      { path: '/student/home', exact: true, element: <HomePage /> },
+      { path: '/student/aboutus', exact: true, element: <AboutUs /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
