@@ -11,37 +11,38 @@ import {
   ListItemText,
 } from '@mui/material';
 import jwt from 'jwt-decode';
-import { IconListCheck, IconMail, IconUser } from '@tabler/icons';
+import { IconUser } from '@tabler/icons';
 
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import Cookies from 'universal-cookie';
-import { getAdmin } from 'src/api/profile/get_admin';
+import getStudentById from 'src/api/student/getStudentById';
 
 export const clearAuthToken = () => {
   // Clear the 'token' cookie by setting its value to an empty string and specifying a past expiration date
   const cookies = new Cookies();
-  cookies.set('admin_token', null, { path: '/' });
+  cookies.set('student_token', null, { path: '/' });
 };
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const [admin, setAdmin] = useState({});
-  // const fetchData = async () => {
-  //   try {
-  //     const cookies = new Cookies();
-  //     const token = cookies.get('admin_token');
-  //     const id = jwt(token)._id;
-  //     console.log(id);
-  //     const response = await getAdmin(id);
-  //     setAdmin(response);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
+  const [student, setStudent] = useState({});
+  const fetchData = async () => {
+    try {
+      const cookies = new Cookies();
+      const token = cookies.get('student_token');
+      const id = jwt(token).id;
+      console.log(id);
+
+      const response = await getStudentById(id);
+      setStudent(response);
+      console.log(response);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   useEffect(() => {
-    // fetchData();
+    fetchData();
   }, []);
 
   const handleClick2 = (event) => {
@@ -53,7 +54,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     clearAuthToken();
-    window.location.href = '/auth/login';
+    window.location.href = '/auth/teacherLogin';
   };
 
   return (
@@ -71,7 +72,7 @@ const Profile = () => {
         }}
         onClick={handleClick2}
       >
-        {admin.profile_image === undefined ? (
+        {student.photo === undefined ? (
           <Avatar
             src={ProfileImg}
             alt={ProfileImg}
@@ -82,8 +83,8 @@ const Profile = () => {
           />
         ) : (
           <Avatar
-            src={admin.profile_image}
-            alt={admin.profile_image}
+            src={student.photo}
+            alt={student.photo}
             sx={{
               width: 35,
               height: 35,
@@ -105,24 +106,13 @@ const Profile = () => {
           },
         }}
       >
-        <MenuItem component={Link} to="/admin/profile">
+        <MenuItem component={Link} to="/student/profile">
           <ListItemIcon>
             <IconUser width={20} />
           </ListItemIcon>
-          <ListItemText link="/admin/profile">My Profile</ListItemText>
+          <ListItemText link="profile">My Profile</ListItemText>
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <IconMail width={20} />
-          </ListItemIcon>
-          <ListItemText>My Account</ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <IconListCheck width={20} />
-          </ListItemIcon>
-          <ListItemText>My Tasks</ListItemText>
-        </MenuItem>
+
         <Box mt={1} py={1} px={2}>
           <Button
             variant="outlined"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logoImage from 'src/assets/images/logos/Black logo - no background.png'; // Adjust the path to your PNG image
+import logoImage from 'src/assets/images/logos/SideBarLogo.png'; // Adjust the path to your PNG image
 import { styled } from '@mui/material';
 
 const LinkStyled = styled(Link)(() => ({
@@ -13,7 +13,11 @@ const LinkStyled = styled(Link)(() => ({
 const Logo = () => {
   return (
     <LinkStyled to="/">
-      <img src={logoImage} alt="Logo" height={110} />
+      <img
+        src={logoImage}
+        alt="Logo"
+        style={{ width: '180px', height: '80px', paddingLeft: '25px' }}
+      />
     </LinkStyled>
   );
 };
