@@ -10,7 +10,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
 import { Paper } from '@mui/material';
 import getStudentById from 'src/api/student/getStudentById';
-// import updateTeacher from '../../api/profile/update_teacher';
+import updateStudent from 'src/api/profile/update_student';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImg from 'src/assets/images/backgrounds/loginBackground.jpg';
@@ -66,7 +66,7 @@ const Profile = () => {
     fileInputRef.current.click();
   };
 
-  const [teacher, setTeacher] = useState({});
+  const [student, setStudent] = useState({});
 
   const fetchData = async () => {
     try {
@@ -75,6 +75,7 @@ const Profile = () => {
       const id = jwt(token).id;
       setId(id);
       const data = await getStudentById(id);
+      setStudent(data);
       console.log(data);
     } catch (err) {
       window.location.href = '/auth/teacherLogin';
@@ -124,22 +125,22 @@ const Profile = () => {
     updateData.id = id;
 
     console.log(updateData);
-    // const responseData = await updateTeacher(updateData);
-    // if (responseData.error) {
-    //   setResponseMessage(responseData.message);
-    // } else {
-    //   setTeacher(responseData);
-    //   setResponseMessage('Profile is updated successfully.');
-    //   toast.success('Profile is updated successfully.', {
-    //     position: 'top-right',
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //   });
-    // }
+    const responseData = await updateStudent(updateData);
+    if (responseData.error) {
+      setResponseMessage(responseData.message);
+    } else {
+      setStudent(responseData);
+      setResponseMessage('Profile is updated successfully.');
+      toast.success('Profile is updated successfully.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   const handleUpload = () => {
@@ -215,7 +216,7 @@ const Profile = () => {
               }}
             >
               <img
-                src={teacher.photo ? teacher.photo : 'https://via.placeholder.com/200'}
+                src={student.photo ? student.photo : 'https://via.placeholder.com/200'}
                 alt="logo"
                 style={{
                   width: '200px',
@@ -280,7 +281,7 @@ const Profile = () => {
                 }}
               >
                 <Typography variant="h6" style={{ color: 'black', textAlign: 'left' }}>
-                  <b>Created At:</b> {formatDate(teacher.createdAt)}
+                  <b>Created At:</b> {formatDate(student.createdAt)}
                 </Typography>
               </div>
               <div
@@ -296,7 +297,7 @@ const Profile = () => {
                 }}
               >
                 <Typography variant="h6" style={{ color: 'black', textAlign: 'left' }}>
-                  <b>Updated At:</b> {formatDate(teacher.updatedAt)}
+                  <b>Updated At:</b> {formatDate(student.updatedAt)}
                 </Typography>
               </div>
             </div>
@@ -309,7 +310,7 @@ const Profile = () => {
                   width="100%"
                   type="text"
                   isMultiline={false}
-                  defaultValue={teacher.firstName ? teacher.firstName : 'No first name available'}
+                  defaultValue={student.firstName ? student.firstName : 'No first name available'}
                   onInputChange={handleFirstNameChange}
                 />
               </div>
@@ -320,7 +321,7 @@ const Profile = () => {
                   width="100%"
                   type="text"
                   isMultiline={false}
-                  defaultValue={teacher.lastName ? teacher.lastName : 'No last name available'}
+                  defaultValue={student.lastName ? student.lastName : 'No last name available'}
                   onInputChange={handleLastNameChange}
                 />
               </div>
@@ -334,7 +335,7 @@ const Profile = () => {
                   width="100%"
                   type="text"
                   isMultiline={false}
-                  defaultValue={teacher.email ? teacher.email : 'No email available'}
+                  defaultValue={student.email ? student.email : 'No email available'}
                   onInputChange={handleEmailChange}
                 />
               </div>
@@ -357,7 +358,7 @@ const Profile = () => {
               width="100%"
               type="text"
               isMultiline={true}
-              defaultValue={teacher.description ? teacher.description : 'No description available'}
+              defaultValue={student.description ? student.description : 'No description available'}
               onInputChange={handleDescriptionChange}
             />
 
