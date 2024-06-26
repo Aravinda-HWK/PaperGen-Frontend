@@ -20,6 +20,7 @@ const Classroom = Loadable(lazy(() => import('../views/classroom/Classroom')));
 const Paper = Loadable(lazy(() => import('../views/paper/Paper')));
 const AddQuestion = Loadable(lazy(() => import('../views/question/Question')));
 const StudentList = Loadable(lazy(() => import('../views/StudentList/StudentList')));
+const StudentProfile = Loadable(lazy(() => import('../views/student/ProfilePage/Profile')));
 const OTPVerification = Loadable(lazy(() => import('../views/OTPVerfication/OTPVerification')));
 
 const Router = [
@@ -57,6 +58,7 @@ const Router = [
     children: [
       { path: '/student/home', exact: true, element: <HomePage /> },
       { path: '/student/aboutus', exact: true, element: <AboutUs /> },
+      { path: '/student/profile', exact: true, element: <StudentProfile /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
