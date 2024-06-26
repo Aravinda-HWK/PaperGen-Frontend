@@ -1,4 +1,4 @@
-import baseURL from "src/config/config";
+import baseURL from 'src/config/config';
 
 export default async function addAdmin(loginData) {
   const response = await fetch(`${baseURL}/api/admin/get`, {
