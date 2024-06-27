@@ -16,10 +16,11 @@ const PaperList = () => {
   const columns = useMemo(
     () => [
       { field: 'name', headerName: 'Name', width: 140 },
-      { field: 'description', headerName: 'Description', width: 250 },
-      { field: 'usedNumberOfQuestions', headerName: 'Number Of Questions', width: 205 },
-      { field: 'startTime', headerName: 'Start Time', width: 250 },
-      { field: 'endTime', headerName: 'End Time', width: 250 },
+      { field: 'description', headerName: 'Description', width: 200 },
+      { field: 'classroomName', headerName: 'Classroom Name', width: 150 },
+      { field: 'usedNumberOfQuestions', headerName: 'Number Of Questions', width: 180 },
+      { field: 'startTime', headerName: 'Start Time', width: 220 },
+      { field: 'endTime', headerName: 'End Time', width: 220 },
     ],
     [rowId, selectionModel],
   );
@@ -40,6 +41,7 @@ const PaperList = () => {
         let item1 = {
           id: index,
           name: item.name,
+          classroomName: item.classroom.name,
           description: item.description,
           usedNumberOfQuestions: item.usedNumberOfQuestions,
           startTime: formatDate(item.startTime),
