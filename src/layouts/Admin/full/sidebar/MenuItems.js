@@ -1,4 +1,4 @@
-import { IconLogin, IconUserPlus, IconHome, IconAccessible } from '@tabler/icons';
+import { IconLogin, IconUserPlus, IconHome, IconAccessible, IconSchoolBell } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
 
@@ -12,6 +12,12 @@ const Menuitems = [
     title: 'Home',
     icon: IconHome,
     href: '/student/home',
+  },
+  {
+    id: uniqueId(),
+    title: 'Classroom',
+    icon: IconSchoolBell,
+    href: '/student/classroom',
   },
   {
     id: uniqueId(),
