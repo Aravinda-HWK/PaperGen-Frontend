@@ -6,12 +6,14 @@ import Cookies from 'universal-cookie';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
+import BlackButton from 'src/components/Buttons/BlackButton';
 
 const PaperList = () => {
   const [pageSize, setPageSize] = useState(5);
   const [rows, setRows] = useState([]);
   const [rowId, setRowId] = useState(null);
   const [selectionModel, setSelectionModel] = useState([]);
+  const [message, setMessage] = useState('');
 
   const columns = useMemo(
     () => [
@@ -52,14 +54,26 @@ const PaperList = () => {
         setRows((rows) => [...rows, item1]);
       });
     } catch (err) {
-      console.log(err);
-      //   window.location.href = '/auth/teacherLogin';
+      window.location.href = '/auth/teacherLogin';
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const goToSelectedPaper = () => {
+    if (selectionModel.length === 0) {
+      alert('Please select a paper to view');
+    } else {
+      if (selectionModel.length > 1) {
+        alert('Please select only one paper to view');
+      } else {
+        // console.log(rows[selectionModel[0]]);
+        window.location.href = `/student/paper/create/${rows[selectionModel[0]].paperId}`;
+      }
+    }
+  };
 
   return (
     <PageContainer title="Paper List" description="this is Paper List Page">
@@ -70,7 +84,7 @@ const PaperList = () => {
         }}
       >
         <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
-          Manage Student List
+          Manage Paper List
         </Typography>
         <DataGrid
           columns={columns}
@@ -128,6 +142,7 @@ const PaperList = () => {
           padding: '25px',
         }}
       ></div>
+      <BlackButton label={'Attempt Paper'} onClick={goToSelectedPaper}></BlackButton>
     </PageContainer>
   );
 };
