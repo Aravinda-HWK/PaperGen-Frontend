@@ -30,10 +30,26 @@ const CreatePaper = () => {
   };
 
   const startQuiz = () => {
+    console.log(paper.startTime, paper.endTime, new Date());
+
+    // Convert startTime and endTime to Date objects
+    const startTime = new Date(paper.startTime);
+    const endTime = new Date(paper.endTime);
+    const currentTime = new Date();
+
+    // Check if the current time is within the start and end time of the quiz
+    if (currentTime < startTime || currentTime > endTime) {
+      alert('Quiz is not available at the moment. Please check the start and end time.');
+      return;
+    }
+
+    // Calculate the duration by subtracting the start time from the end time
+    const duration = endTime - startTime;
     setIsQuizStarted(true);
-    const now = new Date();
-    setStartTime(now);
-    setEndTime(new Date(now.getTime() + 30 * 60000)); // 30-minute quiz duration
+
+    // Set start and end times
+    setStartTime(currentTime);
+    setEndTime(new Date(currentTime.getTime() + duration));
   };
 
   const handleAnswerChange = (currentAnswers) => {
