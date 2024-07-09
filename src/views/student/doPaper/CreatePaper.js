@@ -3,6 +3,7 @@ import { Container, Button, Typography, Box } from '@mui/material';
 import { useParams } from 'react-router';
 import getPaperGivenId from 'src/api/paper/getPaperGivenId';
 import getQuestionPaper from 'src/api/question/getQuestionPaper';
+import background from 'src/assets/images/backgrounds/cd3906fd55422cb3bc7db578b9c9a1b3.jpeg';
 import Quiz from './Quiz';
 import moment from 'moment';
 
@@ -51,18 +52,46 @@ const CreatePaper = () => {
   return (
     <Container>
       {!isQuizStarted && !isQuizSubmitted && (
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Quiz Information
-          </Typography>
-          <Typography variant="body1">
-            Number of Questions: {paper.usedNumberOfQuestions}
-          </Typography>
-          <Typography variant="body1">Start Time: {formatDate(paper.startTime)}</Typography>
-          <Typography variant="body1">End Time: {formatDate(paper.endTime)}</Typography>
-          <Button variant="contained" color="primary" onClick={startQuiz}>
-            Start Quiz
-          </Button>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '120vh', // Full viewport height to center vertically
+            backgroundImage: `url(${background})`, // Background image
+          }}
+        >
+          <Box
+            sx={{
+              padding: 4, // Padding inside the box
+              borderRadius: 3, // Border radius
+              boxShadow: 10, // Elevation level, equivalent to boxShadow: theme.shadows[3]
+              backgroundColor: 'white', // Background color of the box
+              maxWidth: 400, // Optional: max width of the box
+              textAlign: 'center', // Optional: center text inside the box
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              Quiz Information
+            </Typography>
+            <Typography variant="body1">
+              <b> Number of Questions:</b> {paper.usedNumberOfQuestions}
+            </Typography>
+            <Typography variant="body1">
+              <b>Start Time:</b> {formatDate(paper.startTime)}
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                marginBottom: 2,
+              }}
+            >
+              <b>End Time:</b> {formatDate(paper.endTime)}
+            </Typography>
+            <Button variant="contained" color="primary" onClick={startQuiz}>
+              Start Quiz
+            </Button>
+          </Box>
         </Box>
       )}
       {isQuizStarted && !isQuizSubmitted && (
