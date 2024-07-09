@@ -1,40 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Typography, Box } from '@mui/material';
 import { useParams } from 'react-router';
+import getPaperGivenId from 'src/api/paper/getPaperGivenId';
+import getQuestionPaper from 'src/api/question/getQuestionPaper';
 import Quiz from './Quiz';
+import moment from 'moment';
 
 const CreatePaper = () => {
   const [questions, setQuestions] = useState([]);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
   const [answers, setAnswers] = useState({});
+  const [paper, setPaper] = useState({});
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    // Fetch questions from the database (mocked here)
     fetchQuestions();
   }, []);
 
   const fetchQuestions = async () => {
-    // Replace with your actual API call
-    const response = await fetch('/api/questions');
-    const data = await response.json();
-    setQuestions(data);
+    const response = await getPaperGivenId(id);
+    const questions = await getQuestionPaper(id);
+    setQuestions(questions);
+    console.log(questions);
+    setPaper(response);
   };
 
   const startQuiz = () => {
     setIsQuizStarted(true);
     const now = new Date();
     setStartTime(now);
-    setEndTime(new Date(now.getTime() + 30 * 60000)); // Assuming a 30 minute quiz duration
+    setEndTime(new Date(now.getTime() + 30 * 60000)); // 30-minute quiz duration
+  };
+
+  const handleAnswerChange = (currentAnswers) => {
+    setAnswers(currentAnswers);
   };
 
   const handleSubmit = () => {
     setIsQuizSubmitted(true);
-    // Handle submission logic here, e.g., send answers to the backend
-    console.log('Submitted answers:', answers);
+    console.log(answers);
+  };
+
+  const formatDate = (date) => {
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
   };
 
   return (
@@ -44,15 +55,18 @@ const CreatePaper = () => {
           <Typography variant="h4" gutterBottom>
             Quiz Information
           </Typography>
-          <Typography variant="body1">Number of Questions: {questions.length}</Typography>
-          <Typography variant="body1">Quiz Duration: 30 minutes</Typography>
+          <Typography variant="body1">
+            Number of Questions: {paper.usedNumberOfQuestions}
+          </Typography>
+          <Typography variant="body1">Start Time: {formatDate(paper.startTime)}</Typography>
+          <Typography variant="body1">End Time: {formatDate(paper.endTime)}</Typography>
           <Button variant="contained" color="primary" onClick={startQuiz}>
             Start Quiz
           </Button>
         </Box>
       )}
       {isQuizStarted && !isQuizSubmitted && (
-        <Quiz questions={questions} setAnswers={setAnswers} handleSubmit={handleSubmit} />
+        <Quiz questions={questions} setAnswers={handleAnswerChange} handleSubmit={handleSubmit} />
       )}
       {isQuizSubmitted && (
         <Typography variant="h5" gutterBottom>

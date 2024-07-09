@@ -13,10 +13,10 @@ const Quiz = ({ questions, setAnswers, handleSubmit }) => {
   const [currentAnswers, setCurrentAnswers] = useState({});
 
   const handleChange = (questionId, answer) => {
-    setCurrentAnswers({
-      ...currentAnswers,
+    setCurrentAnswers((prevAnswers) => ({
+      ...prevAnswers,
       [questionId]: answer,
-    });
+    }));
   };
 
   const handleFormSubmit = (event) => {
@@ -30,14 +30,14 @@ const Quiz = ({ questions, setAnswers, handleSubmit }) => {
       <form onSubmit={handleFormSubmit}>
         {questions.map((question) => (
           <div key={question.id}>
-            <Typography variant="h6">{question.text}</Typography>
+            <Typography variant="h6">{question.content}</Typography>
             <FormControl component="fieldset">
               <RadioGroup
-                aria-label={question.text}
+                aria-label={question.content}
                 name={String(question.id)}
                 onChange={(e) => handleChange(question.id, e.target.value)}
               >
-                {question.options.map((option) => (
+                {question.sampleAnswer.map((option) => (
                   <FormControlLabel
                     key={option}
                     value={option}
