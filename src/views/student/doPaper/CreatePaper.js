@@ -6,19 +6,22 @@ import getQuestionPaper from 'src/api/question/getQuestionPaper';
 import background from 'src/assets/images/backgrounds/cd3906fd55422cb3bc7db578b9c9a1b3.jpeg';
 import Quiz from './Quiz';
 import moment from 'moment';
+import Cookies from 'universal-cookie';
+import jwt from 'jwt-decode';
 
 const CreatePaper = () => {
   const [questions, setQuestions] = useState([]);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
-  const [answers, setAnswers] = useState({});
   const [paper, setPaper] = useState({});
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const { id } = useParams();
+  const [studentId, setStudentId] = useState(null);
 
   useEffect(() => {
     fetchQuestions();
+    fetchUser();
   }, []);
 
   const fetchQuestions = async () => {
@@ -27,6 +30,17 @@ const CreatePaper = () => {
     setQuestions(questions);
     console.log(questions);
     setPaper(response);
+  };
+
+  const fetchUser = async () => {
+    try {
+      const cookies = new Cookies();
+      const token = cookies.get('student_token');
+      const id = jwt(token).id;
+      setStudentId(id);
+    } catch (err) {
+      window.location.href = '/auth/teacherLogin';
+    }
   };
 
   const startQuiz = () => {
@@ -38,10 +52,10 @@ const CreatePaper = () => {
     const currentTime = new Date();
 
     // Check if the current time is within the start and end time of the quiz
-    if (currentTime < startTime || currentTime > endTime) {
-      alert('Quiz is not available at the moment. Please check the start and end time.');
-      return;
-    }
+    // if (currentTime < startTime || currentTime > endTime) {
+    //   alert('Quiz is not available at the moment. Please check the start and end time.');
+    //   return;
+    // }
 
     // Calculate the duration by subtracting the start time from the end time
     const duration = endTime - startTime;
@@ -58,11 +72,32 @@ const CreatePaper = () => {
 
   const handleSubmit = () => {
     setIsQuizSubmitted(true);
-    console.log(answers);
   };
 
   const formatDate = (date) => {
     return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+  };
+
+  const setAnswers = (currentAnswers) => {
+    let userData = {};
+    // Change the string to integer
+    userData.paperID = parseInt(id);
+    userData.studentID = parseInt(studentId);
+
+    let answers = [];
+    for (let i of questions) {
+      // Corrected line
+      let answer = {};
+      answer.questionId = i.id;
+      if (currentAnswers[i.id] === undefined) {
+        answer.answer = '';
+      } else {
+        answer.answer = currentAnswers[i.id];
+      }
+      answers.push(answer);
+    }
+    userData.answer = answers;
+    console.log(userData);
   };
 
   return (
