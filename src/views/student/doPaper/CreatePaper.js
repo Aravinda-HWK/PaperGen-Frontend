@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import getPaperGivenId from 'src/api/paper/getPaperGivenId';
 import getQuestionPaper from 'src/api/question/getQuestionPaper';
 import background from 'src/assets/images/backgrounds/cd3906fd55422cb3bc7db578b9c9a1b3.jpeg';
+import submitPaper from 'src/api/paper/submitPaper';
 import Quiz from './Quiz';
 import moment from 'moment';
 import Cookies from 'universal-cookie';
@@ -18,6 +19,8 @@ const CreatePaper = () => {
   const [endTime, setEndTime] = useState(null);
   const { id } = useParams();
   const [studentId, setStudentId] = useState(null);
+  const [score, setScore] = useState(0);
+  const [totalQuestions, setTotalQuestions] = useState(0);
 
   useEffect(() => {
     fetchQuestions();
@@ -28,7 +31,7 @@ const CreatePaper = () => {
     const response = await getPaperGivenId(id);
     const questions = await getQuestionPaper(id);
     setQuestions(questions);
-    console.log(questions);
+    setTotalQuestions(response.usedNumberOfQuestions);
     setPaper(response);
   };
 
@@ -58,12 +61,10 @@ const CreatePaper = () => {
     // }
 
     // Calculate the duration by subtracting the start time from the end time
-    const duration = endTime - startTime;
     setIsQuizStarted(true);
 
     // Set start and end times
     setStartTime(currentTime);
-    setEndTime(new Date(currentTime.getTime() + duration));
   };
 
   const handleAnswerChange = (currentAnswers) => {
@@ -78,7 +79,7 @@ const CreatePaper = () => {
     return moment(date).format('MMMM Do YYYY, h:mm:ss a');
   };
 
-  const setAnswers = (currentAnswers) => {
+  const setAnswers = async (currentAnswers) => {
     let userData = {};
     // Change the string to integer
     userData.paperID = parseInt(id);
@@ -97,7 +98,15 @@ const CreatePaper = () => {
       answers.push(answer);
     }
     userData.answer = answers;
-    console.log(userData);
+    const response = await submitPaper(userData);
+    setScore(response.score);
+    setEndTime(new Date());
+    console.log(response);
+  };
+
+  const calculatePercentage = () => {
+    if (totalQuestions === 0) return 0;
+    return ((score / totalQuestions) * 100).toFixed(2);
   };
 
   return (
@@ -149,9 +158,41 @@ const CreatePaper = () => {
         <Quiz questions={questions} setAnswers={handleAnswerChange} handleSubmit={handleSubmit} />
       )}
       {isQuizSubmitted && (
-        <Typography variant="h5" gutterBottom>
-          Quiz Submitted! Thank you.
-        </Typography>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          mt={4}
+          p={2}
+          borderRadius={4}
+          boxShadow={3}
+          bgcolor="background.paper"
+        >
+          <Typography variant="h5" gutterBottom>
+            Quiz Submitted! Thank you.
+          </Typography>
+          <Typography variant="h6" color="primary">
+            Start Time: {formatDate(startTime)}
+          </Typography>
+          <Typography variant="h6" color="primary">
+            End Time: {formatDate(endTime)}
+          </Typography>
+          <Typography
+            variant="h4"
+            color="black"
+            style={{
+              fontWeight: 'bold',
+              padding: '10px 20px',
+              borderRadius: '8px',
+              border: '2px solid',
+              borderColor: '#f50057',
+              marginTop: '10px',
+            }}
+          >
+            Your score: {calculatePercentage()}%
+          </Typography>
+        </Box>
       )}
     </Container>
   );
