@@ -36,11 +36,18 @@ const HomePage = () => {
                   item
                   xs={7}
                   padding={10}
-                  style={{ fontWeight: 'bold', color: 'your-color-here', fontSize: '24px' }}
+                  style={{
+                    fontWeight: 'bold',
+                    color: 'your-color-here',
+                    fontSize: '24px',
+                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.9)',
+                  }}
                 >
                   <h1>
-                    Read like <br />
-                    <br /> never before
+                    Create Academic&nbsp;
+                    <br />
+                    <br />
+                    Papers Effortlessly
                   </h1>
                 </Grid>
 
@@ -50,15 +57,18 @@ const HomePage = () => {
                   xs={15}
                   paddingLeft="20px"
                   paddingTop="110px"
-                  style={{ color: 'black', fontSize: '20px' }}
+                  style={{
+                    fontWeight: 'bold',
+                    color: 'white',
+                    fontSize: '24px',
+                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.9)',
+                  }}
                 >
-                  Step into a world where reading comes to life! Welcome to our AR Interactive Book
-                  Reader, where pages turn into gateways to adventure. Immerse yourself in
-                  captivating stories, enhanced with stunning augmented reality experiences. With a
-                  simple scan, characters leap from the pages, landscapes unfold before your eyes,
-                  and mysteries unravel right in your hands. It's not just reading; it's an
-                  unforgettable journey. Discover the magic of books in a whole new dimension.
-                  Explore, interact, and read like never before!
+                  Welcome to PaperGen, the ultimate platform for educators and students to manage
+                  and evaluate academic papers. Our advanced tools streamline the creation,
+                  submission, and review process, making academic tasks more efficient and
+                  effective. Experience seamless integration of technology in education with
+                  PaperGen.
                 </Grid>
               </div>
             </Grid>
