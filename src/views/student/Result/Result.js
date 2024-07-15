@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PageContainer from 'src/components/container/PageContainer';
-import getPapersStudent from 'src/api/paper/getPapersStudent';
+import getResultsStudent from 'src/api/paper/result';
 import jwt from 'jwt-decode';
 import Cookies from 'universal-cookie';
 import { Box, Typography } from '@mui/material';
@@ -18,10 +18,11 @@ const ResultList = () => {
     () => [
       { field: 'name', headerName: 'Name', width: 140 },
       { field: 'description', headerName: 'Description', width: 200 },
-      { field: 'classroomName', headerName: 'Classroom Name', width: 150 },
-      { field: 'usedNumberOfQuestions', headerName: 'Number Of Questions', width: 180 },
-      { field: 'startTime', headerName: 'Start Time', width: 220 },
-      { field: 'endTime', headerName: 'End Time', width: 220 },
+      { field: 'score', headerName: 'Score', width: 150 },
+      { field: 'number_of_questions', headerName: 'Number Of Questions', width: 180 },
+      { field: 'mark_percentage', headerName: 'Mark Percentage', width: 180 },
+      { field: 'created_at', headerName: 'Created At', width: 220 },
+      { field: 'updated_at', headerName: 'Updated At', width: 220 },
     ],
     [rowId, selectionModel],
   );
@@ -30,25 +31,30 @@ const ResultList = () => {
     return moment(date).format('MMMM Do YYYY, h:mm:ss a');
   };
 
+  const calculateMarkPercentage = (score, numberOfQuestions) => {
+    return ((score / numberOfQuestions) * 100).toFixed(2);
+  };
+
   const fetchData = async () => {
     try {
       const cookies = new Cookies();
       const token = cookies.get('student_token');
       const id = jwt(token).id;
-      const data = await getPapersStudent(id);
+      const data = await getResultsStudent(id);
       const newData = data;
       console.log(newData);
       newData.forEach((item, index) => {
         let item1 = {
           id: index,
-          name: item.name,
-          classroomName: item.classroom.name,
-          description: item.description,
-          usedNumberOfQuestions: item.usedNumberOfQuestions,
-          startTime: formatDate(item.startTime),
-          endTime: formatDate(item.endTime),
+          name: item.paperName,
+          description: item.paperDescription,
+          score: item.score,
+          number_of_questions: item.numberOfQuestions,
+          mark_percentage: calculateMarkPercentage(item.score, item.numberOfQuestions),
+          created_at: formatDate(item.createdAt),
+          updated_at: formatDate(item.updatedAt),
           classroomId: item.classroomId,
-          paperId: item.id,
+          paperId: item.paperId,
         };
         setRows((rows) => [...rows, item1]);
       });
@@ -141,7 +147,7 @@ const ResultList = () => {
           padding: '25px',
         }}
       ></div>
-      <BlackButton label={'Attempt Paper'} onClick={goToSelectedPaper}></BlackButton>
+      <BlackButton label={'Review Paper'} onClick={goToSelectedPaper}></BlackButton>
     </PageContainer>
   );
 };
