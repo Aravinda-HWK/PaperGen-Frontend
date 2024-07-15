@@ -13,7 +13,6 @@ const PaperList = () => {
   const [rows, setRows] = useState([]);
   const [rowId, setRowId] = useState(null);
   const [selectionModel, setSelectionModel] = useState([]);
-  const [message, setMessage] = useState('');
 
   const columns = useMemo(
     () => [
