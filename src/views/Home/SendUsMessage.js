@@ -12,9 +12,11 @@ function SendUsMessage(props) {
     display: 'flex',
     marginTop: 20,
     flexDirection: 'row', // This sets the direction to horizontal
-    backgroundImage: `url(${image})`, // Replace "image" with the variable containing your image path or URL
+    backgroundImage: `url(${image})`, // Replace with your image URL
     backgroundSize: 'cover', // The image will cover the entire container
-    transition: 'box-shadow 0.3s ease', // Add a transition for smooth shadow change
+    backgroundPosition: 'center', // Center the image
+    backgroundRepeat: 'no-repeat', // Prevent the image from repeating
+    transition: 'box-shadow 0.3s ease, transform 0.3s ease', // Add transition for smooth shadow and scale change
     transform: isHovered ? 'scale(1.01)' : 'scale(1)', // Scale up on hover
   };
 
@@ -86,7 +88,7 @@ function SendUsMessage(props) {
             for any info.
           </Typography>
           <Typography style={{ fontSize: '20px', paddingTop: '20px', alignContent: 'center' }}>
-            call us for any emergency to this number
+            Call us for any emergency to this number
           </Typography>
           <Typography style={{ fontSize: '20px', paddingTop: '20px', alignContent: 'center' }}>
             +91 9876543210
@@ -107,6 +109,12 @@ function SendUsMessage(props) {
             fullWidth
             required
             margin="normal"
+            InputProps={{
+              style: { color: 'black' },
+            }}
+            InputLabelProps={{
+              style: { color: 'black' },
+            }}
           />
           <TextField
             label="Email"
@@ -118,6 +126,12 @@ function SendUsMessage(props) {
             fullWidth
             required
             margin="normal"
+            InputProps={{
+              style: { color: 'black' },
+            }}
+            InputLabelProps={{
+              style: { color: 'black' },
+            }}
           />
           <TextField
             label="Contact Number"
@@ -128,6 +142,12 @@ function SendUsMessage(props) {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            InputProps={{
+              style: { color: 'black' },
+            }}
+            InputLabelProps={{
+              style: { color: 'black' },
+            }}
           />
           <TextField
             label="Message"
@@ -140,6 +160,12 @@ function SendUsMessage(props) {
             fullWidth
             required
             margin="normal"
+            InputProps={{
+              style: { color: 'black' },
+            }}
+            InputLabelProps={{
+              style: { color: 'black' },
+            }}
           />
           <PurpleButton label="Send">SEND</PurpleButton>
         </form>
