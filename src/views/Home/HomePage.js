@@ -4,7 +4,6 @@ import { Grid, Box } from '@mui/material';
 import image from 'src/assets/images/home/bgImage1.jpg';
 import image2 from 'src/assets/images/home/rm347-sasi-banner-15.jpg';
 import SendUsMessage from 'src/views/Home/SendUsMessage';
-import ImageCarousel from 'src/views/Home/ImageCarousel';
 
 const HomePage = () => {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -72,14 +71,12 @@ const HomePage = () => {
                 </Grid>
               </div>
             </Grid>
-            <Grid marginTop="50px" marginBottom="50px">
-              <ImageCarousel />
-            </Grid>
 
             <div
               style={{
                 maxWidth: '100%',
                 maxHeight: '100%',
+                marginTop: '40px',
                 borderRadius: '40px',
                 backgroundImage: `url(${image2})`,
                 backgroundSize: 'cover',
