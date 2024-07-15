@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PageContainer from 'src/components/container/PageContainer';
-import techImage from 'src/assets/images/backgrounds/settings.png';
-import million from 'src/assets/images/backgrounds/profits.png';
-import network from 'src/assets/images/backgrounds/network.png';
+import createImage from 'src/assets/images/backgrounds/settings.png';
+import collaborateImage from 'src/assets/images/backgrounds/profits.png';
+import publishImage from 'src/assets/images/backgrounds/network.png';
 
 const AboutUs = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -27,7 +27,7 @@ const AboutUs = () => {
   const cardStyle = {
     width: '30%',
     height: '400px',
-    background: 'linear-gradient(135deg, #6B52AE,#1d2066)', // Purple to Blue gradient
+    background: 'linear-gradient(135deg, #3a0b54, #5e3a8e)', // Dark purple gradient
     border: '1px solid #ccc',
     borderRadius: '15px',
     padding: '20px',
@@ -38,10 +38,11 @@ const AboutUs = () => {
     transform: `translateY(${isMounted ? '0' : '20px'})`,
     transition: 'opacity 0.7s ease, transform 0.7s ease',
   };
+
   const cardLargeStyle = {
     marginTop: '20px',
     width: '100%',
-    background: 'linear-gradient(135deg, #221230,#1d2066)', // Purple to Blue gradient
+    background: 'linear-gradient(135deg, #2e0844, #4b3075)', // Darker purple gradient
     border: '1px solid #ccc',
     borderRadius: '15px',
     padding: '20px',
@@ -64,63 +65,64 @@ const AboutUs = () => {
   };
 
   return (
-    <PageContainer title="About Page" description="This is About Page">
+    <PageContainer title="About PaperGen" description="Learn more about PaperGen">
       <div style={containerStyle}>
         <div style={cardStyle}>
-          <img src={techImage} style={cardImageStyle} height="70px" width="70px" alt="Tech" />
+          <img src={createImage} style={cardImageStyle} height="70px" width="70px" alt="Create" />
           <div style={cardTextStyle}>
-            Our app and website have a diverse user base spanning across continents. With readers
-            from over 120 countries and counting, your books will reach a truly global audience. Tap
-            into new markets and connect with readers from different cultural backgrounds.
+            PaperGen simplifies the creation of academic papers. Our intuitive tools and templates
+            help you get started quickly and ensure your papers meet all formatting standards.
           </div>
         </div>
 
         <div style={cardStyle}>
-          <img src={million} style={cardImageStyle} height="70px" width="70px" alt="Million" />
+          <img
+            src={collaborateImage}
+            style={cardImageStyle}
+            height="70px"
+            width="70px"
+            alt="Collaborate"
+          />
           <div style={cardTextStyle}>
-            Our mobile app has been downloaded over 5 million times and counting. This impressive
-            user base ensures that your books will be exposed to a massive and growing audience,
-            maximizing your book's visibility and potential sales.
+            Collaboration is key to academic success. With PaperGen, you can easily collaborate with
+            peers and mentors, share drafts, and get feedback in real-time.
           </div>
         </div>
 
         <div style={cardStyle}>
-          <img src={network} style={cardImageStyle} height="70px" width="70px" alt="Network" />
+          <img src={publishImage} style={cardImageStyle} height="70px" width="70px" alt="Publish" />
           <div style={cardTextStyle}>
-            Our platform boasts a highly engaged community of readers who spend an average of 30
-            minutes per session. This level of engagement means that readers are actively
-            interacting with the content, discussing it, and sharing their experiences. Your books
-            will have a dedicated and enthusiastic audience eager to explore new releases.
+            Ready to publish? PaperGen streamlines the publishing process, connecting you with
+            top-tier journals and ensuring your work reaches the right audience.
           </div>
         </div>
       </div>
       <div style={cardLargeStyle}>
-        <div style={{ textAlign: 'center', fontSize: '40px', marginTop: '10px', color: '#6B52AE' }}>
+        <div style={{ textAlign: 'center', fontSize: '40px', marginTop: '10px', color: '#e0b3ff' }}>
           Our Team
         </div>
         <div style={{ textAlign: 'center', fontSize: '20px', marginTop: '20px' }}>
-          We are a passionate team of book lovers and tech enthusiasts dedicated to improving the
-          reading experience.
+          We are a dedicated team of academic professionals and tech experts committed to enhancing
+          the research and publication process.
         </div>
         <div style={{ textAlign: 'center', fontSize: '20px', marginTop: '20px' }}>
-          Your feedback is valuable to us. Feel free to contact us with any questions or
-          suggestions.
+          Your feedback is invaluable to us. Please reach out with any questions or suggestions.
         </div>
         <div style={{ textAlign: 'center', fontSize: '20px', marginTop: '20px' }}>
-          <a href="/home" style={{ textDecoration: 'none', color: '#6B52AE', fontWeight: 'bold' }}>
-            Begin Here
+          <a href="/home" style={{ textDecoration: 'none', color: '#e0b3ff', fontWeight: 'bold' }}>
+            Get Started
           </a>
         </div>
       </div>
       <div style={cardLargeStyle}>
-        <div style={{ textAlign: 'center', fontSize: '40px', marginTop: '10px', color: '#6B52AE' }}>
-          Contact Details
+        <div style={{ textAlign: 'center', fontSize: '40px', marginTop: '10px', color: '#e0b3ff' }}>
+          Contact Us
         </div>
         <div style={{ textAlign: 'center', fontSize: '20px', marginTop: '20px' }}>
-          Call Now : +91 9876543210
+          Call Now: +1 234 567 890
         </div>
         <div style={{ textAlign: 'center', fontSize: '20px', marginTop: '20px' }}>
-          Email us : AReader3D@email.com
+          Email: support@papergen.com
         </div>
       </div>
     </PageContainer>
