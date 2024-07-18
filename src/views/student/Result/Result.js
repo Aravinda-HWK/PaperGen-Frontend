@@ -45,7 +45,7 @@ const ResultList = () => {
       console.log(newData);
       newData.forEach((item, index) => {
         let item1 = {
-          id: index,
+          id: item.id,
           name: item.paperName,
           description: item.paperDescription,
           score: item.score,
@@ -71,11 +71,11 @@ const ResultList = () => {
     if (selectionModel.length === 0) {
       alert('Please select a paper to view');
     } else {
+      console.log(selectionModel[0]);
       if (selectionModel.length > 1) {
         alert('Please select only one paper to view');
       } else {
-        // console.log(rows[selectionModel[0]]);
-        window.location.href = `/student/paper/create/${rows[selectionModel[0]].paperId}`;
+        window.location.href = `/student/review/${selectionModel[0]}`;
       }
     }
   };
