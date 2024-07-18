@@ -5,11 +5,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { green, red } from '@mui/material/colors';
 import { useParams } from 'react-router';
 import { getReview } from 'src/api/paper/getReview';
-import { set } from 'lodash';
+import getAnalysis from 'src/api/paper/getAnalysis';
+import Button from '@mui/material/Button';
 
 const ReviewPaper = () => {
   const [answers, setAnswers] = useState([]);
   const [paperName, setPaperName] = useState('');
+  const [analysis, setAnalysis] = useState({});
   const { id } = useParams();
 
   useEffect(async () => {
@@ -25,7 +27,14 @@ const ReviewPaper = () => {
     }));
     setPaperName(response.paperName);
     setAnswers(fetchedAnswers);
-  }, []);
+  }, [id]);
+
+  const handleAnalysis = async (question, index, correctAnswer) => {
+    console.log(question);
+    const analysisResult = await getAnalysis(question, correctAnswer);
+    console.log(analysisResult);
+    setAnalysis((prev) => ({ ...prev, [index]: analysisResult.answer }));
+  };
 
   return (
     <Container maxWidth="md">
@@ -40,11 +49,13 @@ const ReviewPaper = () => {
             <Card
               sx={{
                 display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
                 backgroundColor: answer.isCorrect ? green[50] : red[50],
+                mb: 2,
               }}
             >
-              <CardContent sx={{ flexGrow: 1 }}>
+              <CardContent sx={{ width: '100%' }}>
                 <Typography variant="h6" component="h2">
                   {answer.question}
                 </Typography>
@@ -53,17 +64,58 @@ const ReviewPaper = () => {
                 </Typography>
                 <Typography variant="body1">Your Answer: {answer.userAnswer}</Typography>
               </CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', pr: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mb: 2 }}>
                 {answer.isCorrect ? (
                   <CheckCircleIcon sx={{ color: green[500], fontSize: 40 }} />
                 ) : (
                   <CancelIcon sx={{ color: red[500], fontSize: 40 }} />
                 )}
               </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mb: 2 }}>
+                <Button
+                  variant="contained"
+                  onClick={() => handleAnalysis(answer.question, index, answer.correctAnswer)}
+                  sx={{
+                    backgroundColor: '#000',
+                    color: '#fff',
+                    fontSize: '14px',
+                    padding: '8px 16px',
+                    '&:hover': {
+                      backgroundColor: '#333',
+                    },
+                  }}
+                >
+                  Get Analysis
+                </Button>
+              </Box>
+              {analysis[index] && (
+                <CardContent sx={{ width: '100%', backgroundColor: '#f5f5f5', p: 2 }}>
+                  <Typography variant="body2" color="textSecondary">
+                    Analysis: {analysis[index]}
+                  </Typography>
+                </CardContent>
+              )}
             </Card>
           </Grid>
         ))}
       </Grid>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <Button
+          variant="contained"
+          onClick={() => (window.location.href = '/student/result')}
+          sx={{
+            backgroundColor: '#000',
+            color: '#fff',
+            fontSize: '16px',
+            padding: '10px 20px',
+            '&:hover': {
+              backgroundColor: '#333',
+            },
+          }}
+        >
+          Finish Review
+        </Button>
+      </Box>
     </Container>
   );
 };
