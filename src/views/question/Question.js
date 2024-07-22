@@ -15,6 +15,7 @@ import {
 import BackgoundImage from 'src/assets/images/Paper/pexels-didsss-3527796.jpg';
 import getPapers from 'src/api/paper/getPapers';
 import createQuestion from 'src/api/question/createQuestion';
+import correctQuestion from 'src/api/question/getCorrectQuestion';
 import jwt from 'jwt-decode';
 import Cookies from 'universal-cookie';
 
@@ -27,6 +28,8 @@ const QuestionComponent = () => {
   const [selectedPaper, setSelectedPaper] = useState('');
   const [numberOfQuestions, setNumberOfQuestions] = useState(0);
   const [message, setMessage] = useState('');
+  const [suggestedQuestion, setSuggestedQuestion] = useState('');
+  const [showCorrections, setShowCorrections] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -63,6 +66,27 @@ const QuestionComponent = () => {
     const paper = papers.find((p) => p.id === selectedPaperId);
     setSelectedPaper(selectedPaperId);
     setNumberOfQuestions(paper.numberOfQuestions);
+  };
+
+  const handleCheckGrammar = async () => {
+    try {
+      const data = await correctQuestion({
+        question,
+      });
+      setSuggestedQuestion(data.answer);
+      setShowCorrections(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleAcceptCorrections = () => {
+    setQuestion(suggestedQuestion);
+    setShowCorrections(false);
+  };
+
+  const handleRejectCorrections = () => {
+    setShowCorrections(false);
   };
 
   const handleSubmit = async (e) => {
@@ -201,9 +225,17 @@ const QuestionComponent = () => {
             <Button type="submit" variant="contained" color="primary">
               Submit
             </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleCheckGrammar}
+              sx={{ marginLeft: '1rem' }}
+            >
+              Check Grammar
+            </Button>
           </form>
         </Paper>
-        {submitted && message === 'Question is created successfully!' && (
+        {showCorrections && (
           <Paper
             elevation={20}
             sx={{
@@ -215,34 +247,25 @@ const QuestionComponent = () => {
             }}
           >
             <Typography variant="h6" component="h2" gutterBottom>
-              Submitted Question and Answers
+              Suggested Corrections
             </Typography>
-            <Box sx={{ marginBottom: '1rem' }}>
-              <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-                Question:
-              </Typography>
-              <Typography variant="body2" sx={{ marginLeft: '1rem' }}>
-                {question}
-              </Typography>
-            </Box>
-            <Box sx={{ marginBottom: '1rem' }}>
-              <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-                Answers:
-              </Typography>
-              <ul>
-                {answers.map((answer, index) => (
-                  <li key={index}>{answer}</li>
-                ))}
-              </ul>
-            </Box>
-            <Box sx={{ marginBottom: '1rem' }}>
-              <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-                Correct Answer:
-              </Typography>
-              <Typography variant="body2" sx={{ marginLeft: '1rem' }}>
-                {correctAnswer}
-              </Typography>
-            </Box>
+            <Typography variant="body1" sx={{ marginBottom: '1rem' }}>
+              Original Question: {question}
+            </Typography>
+            <Typography variant="body1" sx={{ marginBottom: '1rem' }}>
+              Corrected Question: {suggestedQuestion}
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ marginRight: '1rem' }}
+              onClick={handleAcceptCorrections}
+            >
+              Accept Corrections
+            </Button>
+            <Button variant="contained" color="secondary" onClick={handleRejectCorrections}>
+              Reject Corrections
+            </Button>
           </Paper>
         )}
       </Container>
