@@ -11,8 +11,6 @@ const AdminLayout = Loadable(lazy(() => import('../layouts/Admin/full/FullLayout
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Register = Loadable(lazy(() => import('../views/authentication/Register')));
 const TeacherLogin = Loadable(lazy(() => import('../views/authentication/TeacherLogin')));
-const ForgotPassword = Loadable(lazy(() => import('../views/authentication/Forgetpassword')));
-const AuthResetPassword = Loadable(lazy(() => import('../views/authentication/ResetPassword')));
 const Profile = Loadable(lazy(() => import('../views/ProfilePage/Profile')));
 const HomePage = Loadable(lazy(() => import('../views/Home/HomePage')));
 const AboutUs = Loadable(lazy(() => import('../views/AboutUs/AboutUs')));
@@ -26,7 +24,6 @@ const PaperListStudent = Loadable(lazy(() => import('../views/student/Paper/Pape
 const CreatePaper = Loadable(lazy(() => import('../views/student/doPaper/CreatePaper')));
 const ResultList = Loadable(lazy(() => import('../views/student/Result/Result')));
 const ReviewPaper = Loadable(lazy(() => import('../views/student/Review/Review')));
-const OTPVerification = Loadable(lazy(() => import('../views/OTPVerfication/OTPVerification')));
 
 const Router = [
   {
@@ -51,9 +48,6 @@ const Router = [
       { path: '404', element: <Error /> },
       { path: '/auth/register', element: <Register /> },
       { path: '/auth/teacherLogin', element: <TeacherLogin /> },
-      { path: '/auth/forgotpassword', element: <ForgotPassword /> },
-      { path: '/auth/resetpassword/:id/:token', element: <AuthResetPassword /> },
-      { path: '/auth/otpverification', element: <OTPVerification /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
