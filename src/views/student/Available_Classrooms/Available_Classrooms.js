@@ -1,25 +1,25 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PageContainer from 'src/components/container/PageContainer';
-import getClassroomsStudent from 'src/api/classroom/getClassroomsStudent';
+import getAllAvailableClassrooms from 'src/api/classroom/getAllAvailableClassrooms';
 import jwt from 'jwt-decode';
 import Cookies from 'universal-cookie';
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import Avatar from '@mui/material/Avatar';
+import BlackButton from 'src/components/Buttons/BlackButton';
 
-const ClassroomList = () => {
+const Available_Classrooms = () => {
   const [pageSize, setPageSize] = useState(5);
   const [rows, setRows] = useState([]);
   const [rowId, setRowId] = useState(null);
   const [selectionModel, setSelectionModel] = useState([]);
+  const [studentId, setStudentId] = useState(null);
 
   const columns = useMemo(
     () => [
-      { field: 'classroom', headerName: 'Classroom', width: 100 },
-      { field: 'description', headerName: 'Description', width: 200 },
-      { field: 'createdAt', headerName: 'Created At', width: 220 },
-      { field: 'updatedAt', headerName: 'Updated At', width: 220 },
+      { field: 'classroom', headerName: 'Classroom', width: 130 },
+      { field: 'description', headerName: 'Description', width: 300 },
       {
         field: 'photo',
         headerName: 'Teacher Photo',
@@ -39,9 +39,9 @@ const ClassroomList = () => {
         sortable: false,
         filterable: false,
       },
-      { field: 'firstName', headerName: 'First Name', width: 100 },
-      { field: 'lastName', headerName: 'Last Name', width: 100 },
-      { field: 'email', headerName: 'Email', width: 220 },
+      { field: 'firstName', headerName: 'First Name', width: 130 },
+      { field: 'lastName', headerName: 'Last Name', width: 130 },
+      { field: 'email', headerName: 'Email', width: 280 },
     ],
     [rowId, selectionModel],
   );
@@ -55,7 +55,8 @@ const ClassroomList = () => {
       const cookies = new Cookies();
       const token = cookies.get('student_token');
       const id = jwt(token).id;
-      const data = await getClassroomsStudent(id);
+      setStudentId(id);
+      const data = await getAllAvailableClassrooms();
       const newData = data;
       newData.forEach((item, index) => {
         let item1 = {
@@ -82,8 +83,23 @@ const ClassroomList = () => {
     fetchData();
   }, []);
 
+  const joinClassroom = () => {
+    if (selectionModel.length === 0) {
+      alert('Please select a classroom to join');
+    } else {
+      if (selectionModel.length > 1) {
+        alert('Please select only one classroom to join');
+      } else {
+        console.log(rows[selectionModel[0]].classroomId, studentId);
+      }
+    }
+  };
+
   return (
-    <PageContainer title="Classroom List" description="this is Classroom List Page">
+    <PageContainer
+      title="Available Classroom List"
+      description="this is Available Classroom List Page"
+    >
       <Box
         sx={{
           height: 400,
@@ -91,7 +107,7 @@ const ClassroomList = () => {
         }}
       >
         <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
-          Joined List of Classroom
+          Available List of Classroom
         </Typography>
         <DataGrid
           columns={columns}
@@ -105,6 +121,7 @@ const ClassroomList = () => {
             top: params.isFirstVisible ? 0 : 5,
             bottom: params.isLastVisible ? 0 : 5,
           })}
+          checkboxSelection
           selectionModel={selectionModel}
           onRowSelectionModelChange={(newSelectionModel) => {
             setSelectionModel(newSelectionModel);
@@ -148,8 +165,9 @@ const ClassroomList = () => {
           padding: '25px',
         }}
       ></div>
+      <BlackButton label={'Join Classroom'} onClick={joinClassroom}></BlackButton>
     </PageContainer>
   );
 };
 
-export default ClassroomList;
+export default Available_Classrooms;

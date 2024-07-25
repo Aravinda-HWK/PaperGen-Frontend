@@ -24,6 +24,9 @@ const PaperListStudent = Loadable(lazy(() => import('../views/student/Paper/Pape
 const CreatePaper = Loadable(lazy(() => import('../views/student/doPaper/CreatePaper')));
 const ResultList = Loadable(lazy(() => import('../views/student/Result/Result')));
 const ReviewPaper = Loadable(lazy(() => import('../views/student/Review/Review')));
+const AvailableClassrooms = Loadable(
+  lazy(() => import('../views/student/Available_Classrooms/Available_Classrooms')),
+);
 
 const Router = [
   {
@@ -63,6 +66,7 @@ const Router = [
       { path: '/student/result', exact: true, element: <ResultList /> },
       { path: '/student/profile', exact: true, element: <StudentProfile /> },
       { path: '/student/review/:id', exact: true, element: <ReviewPaper /> },
+      { path: '/student/availableClassrooms', exact: true, element: <AvailableClassrooms /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },

@@ -6,6 +6,7 @@ import {
   IconSchoolBell,
   IconPaperclip,
   IconMathPi,
+  IconArrowsHorizontal,
 } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
@@ -38,6 +39,12 @@ const Menuitems = [
     title: 'Result',
     icon: IconMathPi,
     href: '/student/result',
+  },
+  {
+    id: uniqueId(),
+    title: 'Available Classrooms',
+    icon: IconArrowsHorizontal,
+    href: '/student/availableClassrooms',
   },
   {
     id: uniqueId(),
