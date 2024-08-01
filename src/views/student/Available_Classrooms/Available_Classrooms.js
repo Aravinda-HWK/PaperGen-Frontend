@@ -3,7 +3,17 @@ import PageContainer from 'src/components/container/PageContainer';
 import getAllAvailableClassrooms from 'src/api/classroom/getAllAvailableClassrooms';
 import jwt from 'jwt-decode';
 import Cookies from 'universal-cookie';
-import { Box, Typography } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  Button,
+} from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import Avatar from '@mui/material/Avatar';
@@ -15,6 +25,8 @@ const Available_Classrooms = () => {
   const [rowId, setRowId] = useState(null);
   const [selectionModel, setSelectionModel] = useState([]);
   const [studentId, setStudentId] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [message, setMessage] = useState('');
 
   const columns = useMemo(
     () => [
@@ -86,13 +98,31 @@ const Available_Classrooms = () => {
   const joinClassroom = () => {
     if (selectionModel.length === 0) {
       alert('Please select a classroom to join');
+    } else if (selectionModel.length > 1) {
+      alert('Please select only one classroom to join');
     } else {
-      if (selectionModel.length > 1) {
-        alert('Please select only one classroom to join');
-      } else {
-        console.log(rows[selectionModel[0]].classroomId, studentId);
-      }
+      setOpenDialog(true);
     }
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+    setMessage('');
+  };
+
+  const handleDialogSubmit = () => {
+    const selectedClassroom = rows.find((row) => row.id === selectionModel[0]);
+    console.log(selectedClassroom.classroomId, studentId, message);
+
+    const requestData = {
+      classroomId: selectedClassroom.classroomId,
+      studentId: studentId,
+      message: message,
+    };
+
+    // Make the API call to join the classroom with the requestData
+
+    handleDialogClose();
   };
 
   return (
@@ -166,6 +196,33 @@ const Available_Classrooms = () => {
         }}
       ></div>
       <BlackButton label={'Join Classroom'} onClick={joinClassroom}></BlackButton>
+      <Dialog open={openDialog} onClose={handleDialogClose}>
+        <DialogTitle>Join Classroom</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please enter a message to the teacher when requesting to join the classroom.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="message"
+            label="Message"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDialogSubmit} color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </PageContainer>
   );
 };
