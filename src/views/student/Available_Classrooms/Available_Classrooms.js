@@ -69,7 +69,7 @@ const Available_Classrooms = () => {
       const token = cookies.get('student_token');
       const id = jwt(token).id;
       setStudentId(id);
-      const data = await getAllAvailableClassrooms();
+      const data = await getAllAvailableClassrooms(id);
       const newData = data;
       newData.forEach((item, index) => {
         let item1 = {

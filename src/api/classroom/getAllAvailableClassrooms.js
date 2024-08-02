@@ -1,7 +1,7 @@
 import baseURL from 'src/config/config';
 
-const getAllAvailableClassrooms = async () => {
-  const response = await fetch(`${baseURL}/classroom/all-classrooms`, {
+const getAllAvailableClassrooms = async (id) => {
+  const response = await fetch(`${baseURL}/classroom/all-classrooms?studentID=${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
