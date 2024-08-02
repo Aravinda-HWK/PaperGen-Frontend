@@ -59,7 +59,7 @@ const AuthRegister = ({ title, subtext }) => {
             setErrorMessege(responseData.message);
             return;
           }
-          window.location.href = `/auth/studentLogin`;
+          window.location.href = `/auth/teacherLogin`;
         } catch (error) {
           setErrorMessege(error.errors[0]);
           return;
