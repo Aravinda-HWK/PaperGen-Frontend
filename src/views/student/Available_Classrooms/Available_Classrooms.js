@@ -18,6 +18,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import Avatar from '@mui/material/Avatar';
 import BlackButton from 'src/components/Buttons/BlackButton';
+import createRequest from 'src/api/request/createRequest';
 
 const Available_Classrooms = () => {
   const [pageSize, setPageSize] = useState(5);
@@ -121,6 +122,15 @@ const Available_Classrooms = () => {
     };
 
     // Make the API call to join the classroom with the requestData
+    const response = createRequest(requestData);
+
+    if (response) {
+      alert('Request sent successfully');
+      // Reload the page
+      window.location.reload();
+    } else {
+      alert('Request failed');
+    }
 
     handleDialogClose();
   };
